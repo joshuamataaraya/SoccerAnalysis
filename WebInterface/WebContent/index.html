@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>User Interface Demo</title>
+<script src="js/lib/angular.min.js"></script>
+<script src="js/lib/angular-resource.js"></script>
+<script src="js/service.js"></script>
+<script src="js/controller.js"></script>
+</head>
+<body ng-app="serviceDemoApp">
+
+	<div ng-controller="serviceCtrl">
+        <table border="1">
+            <tr>
+                <td>Header</td>
+                <td ng-bind="response.name"></td>
+            </tr>
+            <tr>
+                <td>Data</td>
+                <td ng-bind="response.profession"></td>
+            </tr>
+        </table>         
+   </div>
+   
+   <video width="320" height="240" autoplay>
+  <source src="http://localhost:8080/WebInterface/video.mp4 " type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+</body>
+</html>
