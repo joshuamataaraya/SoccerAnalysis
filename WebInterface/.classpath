@@ -31,9 +31,9 @@
 	<classpathentry kind="lib" path="WebContent/META-INF/osgi-resource-locator-1.0.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/META-INF/persistence-api-1.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/META-INF/validation-api-1.1.0.Final.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Xelop/workspace/WebInterface/WebContent/WEB-INF/lib/gson-2.2.2.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.12.jar"/>
 	<classpathentry kind="lib" path="lib/hamcrest-core-1.3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/opencv-3.1"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/gson-2.2.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
