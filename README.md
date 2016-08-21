@@ -17,6 +17,7 @@ This is an analysis of soccer videos
 1. Download the library opencv-3.1 from the followin link: https://sourceforge.net/projects/opencvlibrary/files/opencv-win/3.1.0/opencv-3.1.0.exe/download
 2. Extract on the root of your HardDrive when you're installing it.
 3. Follow the instructions on the following link: http://docs.opencv.org/2.4/doc/tutorials/introduction/java_eclipse/java_eclipse.html#java-eclipse
+4. While you are installing opencv in your Eclipse IDE, it´s important to name it "opencv-3.1".
 
 
 ### Web Server Installation
