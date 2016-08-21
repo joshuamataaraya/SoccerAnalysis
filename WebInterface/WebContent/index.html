@@ -9,6 +9,7 @@
 <script src="js/controller.js"></script>
 </head>
 <body ng-app="serviceDemoApp">
+<p> Test para cobnsumir un servicio de la logica y actualizarse solo </p>
 
 	<div ng-controller="serviceCtrl">
         <table border="1">
@@ -23,10 +24,14 @@
         </table>         
    </div>
    
+   <p> Video Consumido desde el servidor </p>
    <video width="320" height="240" autoplay>
   <source src="http://localhost:8080/WebInterface/video.mp4 " type="video/mp4">
 Your browser does not support the video tag.
 </video>
-
+</br>
+<div ng-controller="serviceCtrl">
+<a ng-href="{{downloadLink}}" target="_blank">Link de descarga, se actualiza por medio de angular para obtener el video de un usuario en especifico (Siguiente Sprint)</a>
+</div>
 </body>
 </html>

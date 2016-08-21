@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 public class UserService {
 
    UserDao userDao = new UserDao();
+   
 
    @GET
    @Path("/users")
@@ -37,10 +38,9 @@ public class UserService {
    @Path("/test")
    @Produces(MediaType.APPLICATION_OCTET_STREAM)
    public Response getFile() {
-	   System.out.println("Working Directory/Video = " +
-	             System.getProperty("user.dir"));
-	   
-     File file = new File("video.mp4");
+	   System.out.print("The working dir: " +System.getProperty("wtp.deploy"));
+	 String url = System.getProperty("wtp.deploy") + "\\WebInterface\\video.mp4";
+     File file = new File(url);
      return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
          .header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"" ) //optional
          .build();
