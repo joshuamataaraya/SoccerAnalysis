@@ -14,7 +14,9 @@ This is an analysis of soccer videos
 - OpenCV-3.1
 
 ### OpenCv Installation
-
+1. Download the library from the followin link: https://sourceforge.net/projects/opencvlibrary/files/opencv-win/3.1.0/opencv-3.1.0.exe/download
+2. Extract on the root of your HardDrive when you're installing it.
+3. Follow the instructions on the following link: http://docs.opencv.org/2.4/doc/tutorials/introduction/java_eclipse/java_eclipse.html#java-eclipse
 ### Web Server Installation
 
 This is used to deploy the UI interface, when it's deployed it can be accesed through "localhost:8080/WebInterface/".
