@@ -1,4 +1,4 @@
-package Logic.ImageProcessor;
+package logic.imageprocessor; 
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +9,10 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
-import Logic.Constants;
+import logic.Constants;
 
 public class ImageProcessorr {
 	
@@ -20,30 +21,39 @@ public class ImageProcessorr {
 	
 	public static Mat detectField(Mat pImage){
 		//detects the soccer field
-	    Mat rgb = pImage.clone();
-	    Mat hsv = rgb2hsv(rgb);
-	    Mat greenMask = greenMask(hsv);
-        Mat dilatedImage = dilate(greenMask);
-        Mat filledImage = imfill(dilatedImage);
-        Mat polishedImage = bwareaopen(filledImage);
-        Mat finalImage = finalTouch(polishedImage);    
-        Mat imageWithoutScore = removeScore(finalImage);
-        return imageWithoutScore;
+	  Mat rgb = pImage.clone();
+      Mat hsv = rgb2hsv(rgb);
+      Imgcodecs.imwrite("testData/2-hsv.png", hsv);
+      Mat greenMask = greenMask(hsv);
+      Imgcodecs.imwrite("testData/3-binaria.png", greenMask);
+      Mat dilatedImage = dilate(greenMask);
+      Imgcodecs.imwrite("testData/4-dilatada.png", dilatedImage);
+      Mat filledImage = imfill(dilatedImage);
+      Imgcodecs.imwrite("testData/5-rellenada.png", filledImage);
+      Mat polishedImage = bwareaopen(filledImage);
+      Imgcodecs.imwrite("testData/6-pulida.png", polishedImage);
+      Mat finalImage = finalTouch(polishedImage);    
+      Imgcodecs.imwrite("testData/7-finalTouch.png", finalImage);
+      Mat imageWithoutScore = removeScore(finalImage);
+      Imgcodecs.imwrite("testData/8-noScore.png", imageWithoutScore);
+      return imageWithoutScore;
 	}
-	public static Boolean compareImage(Mat image1, Mat image2){
-		
-		if (image1.cols() != image2.cols() || image1.rows() != image2.rows() || image1.dims() != image2.dims()) {
-	        return false;//image must have the same dimensions
-	    }	
-		Mat oneChannel1 =  new Mat();
-	    Mat oneChannel2 = new Mat();
-	    //Imgproc.cvtColor(image1, oneChannel1, Imgproc.COLOR_RGB2GRAY);//transform it into 1 channel image
-	    //Imgproc.cvtColor(image2, oneChannel2, Imgproc.COLOR_RGB2GRAY);//transform it into 1 channel image
-	    
-	    Mat result = new Mat();
-	    Core.compare(oneChannel1, oneChannel2, result, 1);	    
-	    return Core.countNonZero(result) == 0;
-	}
+	
+  public static Boolean compareImage(Mat image1, Mat image2) {
+    //both image 1 and image 2 must be converted to 1 channel before
+    if (image1.cols() != image2.cols() || image1.rows() != image2.rows() || image1.dims() != image2.dims()) {
+        return false;//image must have the same dimensions
+    }
+     Mat result = new Mat();
+     Core.compare(image1, image2, result, 1);	    
+     return Core.countNonZero(result) == 0;
+    }
+  
+  
+  
+  
+  
+  
 	public static Mat rgb2hsv(Mat pImage){
 		//receives an image in rgb format, and transforms it into hsv
 		Mat hsv = new Mat();
@@ -51,6 +61,7 @@ public class ImageProcessorr {
 	    //Imgcodecs.imwrite("2-hsv.png", hsv);
 	    return hsv;
 	}
+	
 	public static Mat greenMask(Mat pImage){
 		//crates a binary mask of green pixeles of an image
 		//pImage must be in hsv format
@@ -119,7 +130,9 @@ public class ImageProcessorr {
 	}
 	public static Mat removeScore(Mat pImage){
 		Mat removedScoreImage = pImage.clone();
-		//Imgproc.rectangle(removedScoreImage, Constants.SCOREPOINT1, Constants.SCOREPOINT2, Constants.BLACK, -1);
+		Imgproc.rectangle(removedScoreImage, Constants.SCOREPOINT1, Constants.SCOREPOINT2, Constants.BLACK, -1);
 		return removedScoreImage;
 	}
+	
+	
 }
