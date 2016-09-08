@@ -5,16 +5,20 @@
    http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
    id="WebApp_ID" version="3.0">
    <display-name>WebInterface</display-name>
-   <filter>
-      <filter-name>Jersey RESTful Application</filter-name>
-      <filter-class>org.glassfish.jersey.servlet.ServletContainer</filter-class>
-         <init-param>
-            <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>API</param-value>
-         </init-param>
-      </filter>
-   <filter-mapping>
-   <filter-name>Jersey RESTful Application</filter-name>
-      <url-pattern>/rest/*</url-pattern>
-   </filter-mapping>  
+   <servlet>
+		<servlet-name>jersey-helloworld-serlvet</servlet-name>
+		<servlet-class>
+                     com.sun.jersey.spi.container.servlet.ServletContainer
+                </servlet-class>
+		<init-param>
+		     <param-name>com.sun.jersey.config.property.packages</param-name>
+		     <param-value>API</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>jersey-helloworld-serlvet</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
 </web-app>

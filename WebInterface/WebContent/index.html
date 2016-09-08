@@ -14,11 +14,11 @@
 	<div ng-controller="serviceCtrl">
         <table border="1">
             <tr>
-                <td>Header</td>
+                <td>Nombre</td>
                 <td ng-bind="response.name"></td>
             </tr>
             <tr>
-                <td>Data</td>
+                <td>Profesion</td>
                 <td ng-bind="response.profession"></td>
             </tr>
         </table>         
@@ -33,5 +33,14 @@ Your browser does not support the video tag.
 <div ng-controller="serviceCtrl">
 <a ng-href="{{downloadLink}}" target="_blank">Link de descarga, se actualiza por medio de angular para obtener el video de un usuario en especifico (Siguiente Sprint)</a>
 </div>
+
+    <form action="rest/UserService/upload" method="post" enctype="multipart/form-data">
+       <p>
+        Select a file : <input type="file" name="file" size="50" />
+       </p>
+       <input type="submit" value="Upload It" />
+    </form>
+      
+      
 </body>
 </html>

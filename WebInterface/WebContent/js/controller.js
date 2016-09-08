@@ -7,3 +7,6 @@ app.controller('serviceCtrl',['DemoService','$scope',function(DemoService, $scop
               $scope.response=DemoService[0];
 console.log($scope.response);
        })}]);
+
+
+
