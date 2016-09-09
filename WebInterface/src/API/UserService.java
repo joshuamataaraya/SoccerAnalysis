@@ -28,16 +28,15 @@ import com.google.gson.Gson;
 
 @Path("/UserService")
 public class UserService {
-
-   UserDao userDao = new UserDao();
    
 
    @GET
    @Path("/users")
    @Produces(MediaType.APPLICATION_JSON)
    public String getUsers(){
-      String json = new Gson().toJson(userDao.getAllUsers());
+      String json = new Gson().toJson(new UserEx());
       System.out.println(json);
+      System.out.println("sup!");
       return json;
    }
    
@@ -46,7 +45,7 @@ public class UserService {
    @Produces(MediaType.APPLICATION_OCTET_STREAM)
    public Response getFile() {
 	   System.out.print("The working dir: " +System.getProperty("wtp.deploy"));
-	 String url = System.getProperty("wtp.deploy") + "\\WebInterface\\video.mp4";
+	 String url = System.getProperty("wtp.deploy") + "\\BocaAnalytics\\video.mp4";
      File file = new File(url);
      return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
          .header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"" ) //optional
