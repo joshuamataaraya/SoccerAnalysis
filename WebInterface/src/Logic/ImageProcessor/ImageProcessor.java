@@ -1,7 +1,7 @@
 package logic.imageprocessor;
 
 
-public abstract class ImageProcessor {
+abstract class ImageProcessor {
 
   public ImageProcessor() { }
   
@@ -24,4 +24,6 @@ public abstract class ImageProcessor {
   public abstract Object findContours(Object image);
   
   public abstract Boolean compareImage(Object image1, Object image2);
+  
+  public abstract Object h(Object image);
 }

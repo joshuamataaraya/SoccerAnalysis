@@ -1,5 +1,7 @@
 package logic.imageprocessor;
 
+import logic.Constants;
+
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
@@ -7,13 +9,11 @@ import org.opencv.core.Scalar;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
-import logic.Constants;
-
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class FieldDetector extends OpencvDetector {
+class FieldDetector extends OpencvDetector {
 
   public FieldDetector(Mat image) {
     super(image);

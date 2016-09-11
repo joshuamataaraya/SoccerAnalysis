@@ -1,5 +1,7 @@
 package logic.imageprocessor;
 
+import logic.Constants;
+
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -8,13 +10,11 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
-import logic.Constants;
-
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class OpencvImageProcessor extends ImageProcessor {
+class OpencvImageProcessor extends ImageProcessor {
 
   public OpencvImageProcessor() {  }
 
@@ -91,25 +91,23 @@ public class OpencvImageProcessor extends ImageProcessor {
 
   @Override
   public Boolean compareImage(Object image1, Object image2) {
-    Mat image1Mat = (Mat) image1;
-    Mat image2Mat = (Mat) image2;
-    /*if (image1Mat.cols() != image2Mat.cols() || image1Mat.rows() != image2Mat.rows()
-        || image1Mat.dims() != image2Mat.dims()) {
+    //both image 1 and image 2 must be converted to 1 channel before
+    Mat matImage1 = (Mat) image1;
+    Mat matImage2 = (Mat) image2;
+    if (matImage1.cols() != matImage2.cols()
+        || matImage1.rows() != matImage2.rows() || matImage1.dims() != matImage2.dims()) {
       return false;//image must have the same dimensions
-    }   */
-    Mat oneChannel1 =  new Mat();
-    Mat oneChannel2 = new Mat();
-    //transform it into 1 channel image
-   
-      //Imgproc.cvtColor(image1Mat, oneChannel1, Imgproc.COLOR_RGB2GRAY);
-      //Imgproc.cvtColor(image2Mat, oneChannel2, Imgproc.COLOR_RGB2GRAY);
-    
-    
-    
+    }
     Mat result = new Mat();
-    //Core.compare(oneChannel1, oneChannel2, result, 1);      
-    //return Core.countNonZero(result) == 0;
-    return true;
+    Core.compare(matImage1, matImage2, result, 1);       
+    return Core.countNonZero(result) == 0;
   }
 
+  @Override
+  public Object h(Object image) {
+    //gets H of an HSV image
+    List<Mat> channel = new ArrayList<>();
+    Core.split((Mat) image, channel);
+    return channel.get(0);
+  }
 }

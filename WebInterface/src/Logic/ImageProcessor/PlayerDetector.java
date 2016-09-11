@@ -1,8 +1,13 @@
 package logic.imageprocessor;
 
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfDouble;
+import org.opencv.core.Size;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
-public class PlayerDetector extends OpencvDetector {
+class PlayerDetector extends OpencvDetector {
 
   public PlayerDetector(Mat image) {
      super(image);
@@ -10,10 +15,55 @@ public class PlayerDetector extends OpencvDetector {
 
   @Override
   public Object detect() {
+    //detects the players
+    Mat imageMat = (Mat) image;
+    Mat rgb = (Mat) imageMat.clone();
+    Mat hsv = (Mat) processor.rgb2hsv(rgb);
+    Imgcodecs.imwrite("testData/2-hsv.png", hsv);
+    Mat std = stdfilt(hsv);
+    Imgcodecs.imwrite("testData/prueba.png", std);
     return null;
   }
   
-  //en construcción 
+  private Mat normalizeImage(Mat image) {
+    return null;
+  }
+  
+  private Mat stdfilt(Mat image) {
+    Mat h = (Mat) processor.h(image);
+    Core.normalize(h, h, 0, 255, Core.NORM_MINMAX);
+    Mat out;
+    out = h.clone();
+    // find out the mean image
+    Imgproc.blur(h, out, new Size(5,5));
+    // substract mean image
+    Core.absdiff(out,h,out);
+    // square to get std matrix
+    Core.pow(out,2.0,out);
+    // square to get mean matrix
+    Core.pow(out,2.0,out);
+    Core.normalize(out, out, 0, 255, Core.NORM_MINMAX);
+    Imgproc.blur(h, h, new Size(5,5));
+    MatOfDouble mean = new MatOfDouble();
+    MatOfDouble stddev = new MatOfDouble();
+    Core.meanStdDev(h, mean, stddev);
+
+    
+    return h;
+  }
+  
+  private Mat truncate(Mat image) {
+    return null;
+  }
+  
+  private Mat graythresh(Mat image) {
+    return null;
+  }
+  
+  private Mat im2bw(Mat image) {
+    return null;
+  }
+  
   /*public static Mat detectPlayers(Mat pImage){
   //detects posible regions that could be players
   Mat rgb = pImage.clone();

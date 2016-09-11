@@ -7,7 +7,7 @@ import logic.Constants;
 
 
 
-public abstract class OpencvDetector extends Detector {
+abstract class OpencvDetector extends Detector {
 
   public OpencvDetector(Mat image) {
     super(image);
