@@ -17,7 +17,10 @@ public class PlayerDetectorTest {
   public void testDetect() {
     ImageProcessor processor = new OpencvImageProcessor();
     Detector detector = new PlayerDetector(Imgcodecs.imread("testData/1-rgb.png"));
-    detector.detect();
+    Mat correctImage = Imgcodecs.imread("testData/jugadores.png",
+        Imgcodecs.IMREAD_GRAYSCALE);
+    Mat realImage = (Mat) detector.detect();
+    processor.compareImage(realImage, correctImage);
   }
 
 }

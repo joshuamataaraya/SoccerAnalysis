@@ -104,7 +104,7 @@ class OpencvImageProcessor extends ImageProcessor {
   }
 
   @Override
-  public Object h(Object image) {
+  public Object hh(Object image) {
     //gets H of an HSV image
     List<Mat> channel = new ArrayList<>();
     Core.split((Mat) image, channel);

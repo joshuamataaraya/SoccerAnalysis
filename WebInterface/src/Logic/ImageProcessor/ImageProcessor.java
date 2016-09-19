@@ -25,5 +25,5 @@ abstract class ImageProcessor {
   
   public abstract Boolean compareImage(Object image1, Object image2);
   
-  public abstract Object h(Object image);
+  public abstract Object hh(Object image);
 }
