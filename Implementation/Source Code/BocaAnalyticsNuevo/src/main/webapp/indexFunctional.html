@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>User Interface Demo</title>
+<script src="js/lib/angular.min.js"></script>
+<script src="js/lib/angular-resource.js"></script>
+<script src="js/service.js"></script>
+<script src="js/controller.js"></script>
+</head>
+<body ng-app="serviceDemoApp">
+<p> Test para cobnsumir un servicio de la logica y actualizarse solo </p>
+
+	<div ng-controller="serviceCtrl">
+        <table border="1">
+            <tr>
+                <td>Nombre</td>
+                <td ng-bind="response.name"></td>
+            </tr>
+            <tr>
+                <td>Profesion</td>
+                <td ng-bind="response.profession"></td>
+            </tr>
+        </table>         
+   </div>
+   
+   <p> Video Consumido desde el servidor </p>
+   <video width="320" height="240" autoplay>
+  <source src="http://localhost:8080/BocaAnalytics/video.mp4 " type="video/mp4">
+Your browser does not support the video tag.
+</video>
+</br>
+<div ng-controller="serviceCtrl">
+<a ng-href="{{downloadLink}}" target="_blank">Link de descarga, se actualiza por medio de angular para obtener el video de un usuario en especifico (Siguiente Sprint)</a>
+</div>
+
+    <form action="rest/UserService/upload" method="post" enctype="multipart/form-data">
+       <p>
+        Select a file : <input type="file" name="file" size="50" />
+       </p>
+       <input type="submit" value="Upload It" />
+    </form>
+      
+      
+</body>
+</html>
