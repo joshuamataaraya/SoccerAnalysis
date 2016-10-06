@@ -10,6 +10,8 @@ import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 
 @WebSocket
 public class ToUpperWebSocket {
+	
+	Session ses;
 
 	@OnWebSocketMessage
 	public void onText(Session session, String message) throws IOException {
@@ -22,6 +24,7 @@ public class ToUpperWebSocket {
 
 	@OnWebSocketConnect
 	public void onConnect(Session session) throws IOException {
+		ses = session;
 		System.out.println(session.getRemoteAddress().getHostString() + " connected!");
 	}
 
