@@ -83,7 +83,7 @@
     		<artifactId>com.sample</artifactId>
     		<version>1.0</version>
     		<scope>system</scope>
-    		<systemPath>C:\opencv-3.1\build\java\opencv-310.jar</systemPath>
+    		<systemPath>C:\opencv\build\java\opencv-310.jar</systemPath>
 		</dependency>
 		
 		<dependency>

@@ -12,7 +12,7 @@ public class FieldDetectorTest {
   public FieldDetectorTest() {
     System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
   }
-  
+ 
   @Test
   public void testDetect() {
     ImageProcessor processor = new OpencvImageProcessor();

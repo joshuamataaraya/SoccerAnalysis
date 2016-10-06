@@ -4,8 +4,9 @@ Para el estandar de JAVA no se encontro un .MD que lo contuviera, por lo que se 
 https://google.github.io/styleguide/javaguide.html
 
 Se utilizara CheckStyle: checkstyle.sourceforge.net
+Se puede descargar en : http://eclipse-cs.sourceforge.net/#!/install
 
-para llevar el seguimiento del estandar de JAVA, sin embargo no se considera uan dependencia para el proyecto.
+para llevar el seguimiento del estandar de JAVA, sin embargo no se considera una dependencia para el proyecto.
 
 Ademas, se utilizara para javascript: http://www.jslint.com/
 

@@ -8,6 +8,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ class OpencvImageProcessor extends ImageProcessor {
   public Mat fillContours(Object image, Object contours, Object color) {
     Mat imageMat = (Mat) image;
     Mat clonedImage = imageMat.clone();
-    Imgproc.drawContours(clonedImage, (List<MatOfPoint>) contours, -1, Constants.BLACK,-1);
+    Imgproc.drawContours(clonedImage, (List<MatOfPoint>) contours, -1, (Scalar)color,-1);
     return clonedImage;
   }
 
@@ -109,5 +110,42 @@ class OpencvImageProcessor extends ImageProcessor {
     List<Mat> channel = new ArrayList<>();
     Core.split((Mat) image, channel);
     return channel.get(0);
+  }
+
+  @Override
+  public Object paintPlayers(Object originalImage, Object field, Object players) {
+    //paints the players in the final image
+    Mat originalImageMat = (Mat)originalImage;
+    Mat finalImage = originalImageMat.clone();
+    Mat playersMat = (Mat) getPlayers(field, players);
+    List<MatOfPoint> contours = new ArrayList<>();//all contorus are saved here
+    contours = findContours(playersMat);
+    if (!contours.isEmpty()) {
+      finalImage = fillContours(finalImage, contours, Constants.RED);
+    }
+    Imgcodecs.imwrite("testData/blobsPintados.png", (Mat) finalImage);
+    return finalImage;
+  }
+
+
+  @Override
+  public Object getPlayers(Object field, Object players) {
+    Mat invertedField = complement(field);
+    Mat playersMat = or(invertedField, (Mat)players);//invert and or to get the blobs in the field
+    playersMat = floodFill(playersMat, Constants.STARTPOINT, Constants.BLACK);
+    Imgcodecs.imwrite("testData/blobsBinarios.png", (Mat) playersMat);
+    return playersMat;
+  }
+
+  @Override
+  public double dice(Object groundTruth, Object field, Object players) {
+    //dice index between groundTruth and image
+    Mat playersMat = (Mat) getPlayers(field, players);
+    double playerPixels = Core.countNonZero(playersMat);
+    double groundTruthPixels = Core.countNonZero((Mat) groundTruth);
+    Mat andMat = new Mat();
+    Core.bitwise_and(playersMat, (Mat) groundTruth, andMat);
+    double andMatPixels =  Core.countNonZero(andMat);
+    return (2 * andMatPixels) / (playerPixels + groundTruthPixels);
   }
 }

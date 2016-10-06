@@ -26,4 +26,10 @@ abstract class ImageProcessor {
   public abstract Boolean compareImage(Object image1, Object image2);
   
   public abstract Object hh(Object image);
+  
+  public abstract Object paintPlayers(Object originalImage, Object field, Object players);
+  
+  public abstract Object getPlayers(Object field, Object players);
+  
+  public abstract double dice(Object groundTruth, Object field, Object players);
 }

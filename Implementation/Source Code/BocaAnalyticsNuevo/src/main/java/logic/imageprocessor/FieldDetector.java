@@ -34,7 +34,7 @@ class FieldDetector extends OpencvDetector {
     Imgcodecs.imwrite("testData/5-rellenada.png", filledImage);
     Mat polishedImage = bwareopen(filledImage);
     Imgcodecs.imwrite("testData/6-pulida.png", polishedImage);
-    Mat finalImage = finalTouch(polishedImage);    
+    Mat finalImage = fillEspuriousRegions(polishedImage);    
     Imgcodecs.imwrite("testData/7-finalTouch.png", finalImage);
     Mat imageWithoutScore = removeScore(finalImage);
     Imgcodecs.imwrite("testData/8-noScore.png", imageWithoutScore);
@@ -44,7 +44,8 @@ class FieldDetector extends OpencvDetector {
   private Mat greenMask(Mat image) {
     //crates a binary mask of green pixeles of an image
     //image must in hsv format
-    Scalar alfaMin = new Scalar(Constants.GREEN - Constants.SENSITIVITY, 100, 100); 
+    Scalar alfaMin = new Scalar(Constants.GREEN - Constants.SENSITIVITY, 
+        Constants.SV, Constants.SV); 
     Scalar alfaMax = new Scalar(Constants.GREEN + Constants.SENSITIVITY, 255, 255); 
     Mat binaryImage = (Mat) processor.mask((Mat) image, alfaMin, alfaMax);
     return binaryImage;
@@ -69,7 +70,7 @@ class FieldDetector extends OpencvDetector {
     return null;
   }
   
-  private Mat finalTouch(Mat image) {
+  private Mat fillEspuriousRegions(Mat image) {
     //fills possible holes that were not filled before
     //generally are regions close to the borders
     Mat invImage = (Mat) processor.complement(image);
