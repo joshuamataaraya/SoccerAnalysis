@@ -18,6 +18,19 @@
 	<div id="output">
 		<p>Output</p>
 	</div>
+	
+       
+    <h2>File Upload</h2>
+    <h2>File Upload</h2>
+    Select file
+    <input type="file" id="filename" />
+    <br>
+    <input type="button" value="Connect" onclick="connectChatServer()" />
+    <br>
+    <input type="button" value="Upload" ng-click="sendFile()" />
+    
+    <img id="mySpinner" src="assets/img/loading.gif" ng-show="loading" />
+    
 </div>
 </body>
 
