@@ -2,6 +2,7 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="js/consumable.js"></script>
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -27,14 +28,18 @@
     <br>
     <input type="button" value="Connect" onclick="connectChatServer()" />
     <br>
-    <input type="button" value="Upload" ng-click="sendFile()" />
+    <input type="button" value="Upload" ng-click="connect()" />
     
     <img id="mySpinner" src="assets/img/loading.gif" ng-show="loading" />
     
+    <div id="myProgress">
+  		<div id="myBar">
+    		<div id="label">0%</div>
+  		</div>
+	</div>
+	
+	<a href={{downloadLink}} download>Link </a>
+    
 </div>
 </body>
-
-<script type="text/javascript">
-	
-</script>
 </html>

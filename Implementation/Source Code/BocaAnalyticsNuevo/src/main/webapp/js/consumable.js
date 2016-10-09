@@ -2,112 +2,97 @@ var app = angular.module('myApp',[]);
 app.controller('myCtrl', function($scope) {
    
     var webSocket;
+    var width = 0;
+    var elem = document.getElementById("myBar");
+    var vid = document.getElementById("myVideo");
+    var endMessage;
+    var idFileInput;
+    $scope.loading = false;
+    $scope.videoProcess = false;
+    $scope.buttonsAvailable = true;
+    $scope.downloadLink = "/video.mp4";
+    $scope.displayVideo = "http://localhost:8080/video.mp4";
 
-	$scope.connect = function() {
+	$scope.connect = function(pEndMessage, pIdFileInput) {
 		// oprn the connection if one does not exist
 		if (webSocket !== undefined
 				&& webSocket.readyState !== WebSocket.CLOSED) {
 			return;
 		}
 		// Create a websocket
-		webSocket = new WebSocket("ws://localhost:8080/toUpper");
+		webSocket = new WebSocket("ws://localhost:8080/vidUpload");
+		
+		endMessage = pEndMessage;
+		idFileInput = pIdFileInput;
 
 		webSocket.onopen = function(event) {
-		    
-			$scope.updateOutput("Connected!");
-			connectBtn.disabled = true;
-			sendBtn.disabled = false;
+			vid.pause();
+			$scope.buttonsAvailable = false;
+			console.log("here?");
+			$scope.send();
 
 		};
 
 		webSocket.onmessage = function(event) {
-			$scope.updateOutput(event.data);
-			$scope.loading = false;
-			$scope.$digest();
-			console.log($scope.loading);
+			if(event.data == "transfer"){
+				$scope.loading = false;
+				$scope.moveBar();
+				$scope.$digest();
+				
+			}else{
+				if(event.data == "groundTruth"){
+					webSocket.close();
+				}else{
+					$scope.downloadLink= event.data;
+					$scope.displayVideo = "http://localhost:8080/"+ event.data;
+					console.log($scope.displayVideo);
+					console.log(event.data);
+					webSocket.close();
+				}
+			}
 		};
 
 		webSocket.onclose = function(event) {
-			$scope.updateOutput("Connection Closed");
-			connectBtn.disabled = false;
-			sendBtn.disabled = true;
+			$scope.videoProcess = false;
+			$scope.buttonsAvailable = true;
+			width = 0;
+			$scope.$digest();
+			vid.load();
 		};
 	}
 
 	$scope.send = function(){
 		console.log("here");
+		$scope.videoProcess = true;
 		$scope.loading = true;
+		$scope.$digest();
 		console.log($scope.loading);
-        var file = document.getElementById('filename').files[0];
-        webSocket.send('filename:'+file.name);
-        var reader = new FileReader();
-        var rawData = new ArrayBuffer();            
-        //alert(file.name);
-
-        reader.loadend = function() {
-
-        }
-        reader.onload = function(e) {
-        	$scope.loading = true;
-            rawData = e.target.result;
-            webSocket.send(rawData);
-            webSocket.send('end');
-        }
-
-        reader.readAsArrayBuffer(file);
-	}
-
-	$scope.closeSocket = function() {
-		webSocket.close();
-	}
-
-	$scope.updateOutput = function(text) {
-		output.innerHTML += "<br/>" + text;
-	}
-
-    function connectChatServer() {
-        webSocket = new WebSocket(
-                "ws://localhost:8080/toUpper");
-
-        webSocket.binaryType = "arraybuffer";
-        webSocket.onopen = function() {
-            alert("Connected.")
-        };
-
-        webSocket.onmessage = function(evt) {
-            alert(evt.msg);
-        };
-
-        webSocket.onclose = function() {
-            alert("Connection is closed...");
-        };
-        webSocket.onerror = function(e) {
-            alert(e.msg);
-        }
-
-    }
-
-    $scope.sendFile=function(){
-    	console.log("here");
-    	connectChatServer();
-        var file = document.getElementById('filename').files[0];
-        webSocket.send('filename:'+file.name);
-        var reader = new FileReader();
-        var rawData = new ArrayBuffer(); 
-        $scope.loading = true;
-        //alert(file.name);
-
-        reader.loadend = function() {
-
-        }
-        reader.onload = function(e) {
-            rawData = e.target.result;
-            webSocket.send(rawData);
-            webSocket.send('end');
-        }
-
-        reader.readAsArrayBuffer(file);
-
-    }
+        var file = document.getElementById(idFileInput).files[0];
+        if (typeof(file) == 'undefined') {
+        	  webSocket.close();
+        }else{
+	        webSocket.send('filename:'+file.name);
+	        var reader = new FileReader();
+	        var rawData = new ArrayBuffer();            
 	
+	        reader.loadend = function() {
+	
+	        }
+	        reader.onload = function(e) {
+	        	$scope.loading = true;
+	            rawData = e.target.result;
+	            webSocket.send(rawData);
+	            webSocket.send(endMessage);
+	        }
+	
+	        reader.readAsArrayBuffer(file);
+        }
+	}
+	
+	$scope.moveBar= function() {
+	    width++; 
+        elem.style.width = width + '%'; 
+        document.getElementById("label").innerHTML = width + '%';
+
+	 }
 });
