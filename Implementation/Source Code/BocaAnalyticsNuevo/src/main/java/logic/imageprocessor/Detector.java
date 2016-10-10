@@ -15,15 +15,15 @@ public abstract class Detector {
   /**
    * Instantiates a new detector.
    *
-   * @param image: must be an image in RGB format
+   * @param image must be an image in RGB format.
    */
   public Detector(Object image) {
     this.image = image;
   }
   
   /**
-   * Detects an object in an image
-   *
+   * Detects an object in an image. 
+   * Serves as a main, it calls all the other private or protected functions.
    * @return the object which was detected. In binary format.
    */
   public abstract Object detect();

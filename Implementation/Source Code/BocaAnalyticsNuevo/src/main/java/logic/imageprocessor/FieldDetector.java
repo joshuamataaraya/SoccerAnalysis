@@ -21,6 +21,9 @@ import java.util.List;
 /**
  * The Class FieldDetector.
  * Its purpose is to detect the soccer field.
+ * In normal usage the image is from a normal soccer match.
+ * The whole algorithm was taken from (page 3):
+ * https://github.com/joshuamataaraya/SoccerAnalysis/blob/master/Requirements/User%20Needs.pdf
  * Players must have their uniform different to green.
  * Referee would be detected.
  * The soccer field must be green.
@@ -29,7 +32,6 @@ class FieldDetector extends OpencvDetector {
 
   /**
    * Instantiates a new field detector.
-   * In normal usage the image is from a normal soccer match.
    * @param image: must be in RGB format. Expected to be an OpenCV Mat.
    */
   public FieldDetector(Mat image) {
@@ -38,6 +40,8 @@ class FieldDetector extends OpencvDetector {
 
   /* (non-Javadoc)
    * @see logic.imageprocessor.Detector#detect()
+   *  Uses opencv function ImgCodecs.imwrite():
+   *  http://docs.opencv.org/java/3.0.0/org/opencv/imgcodecs/Imgcodecs.html
    */
   @Override
   public Object detect() {
@@ -80,8 +84,10 @@ class FieldDetector extends OpencvDetector {
   /**
    * Bwareopen.
    * Eliminates spurious regions of an image
+   * Uses: OpenCV function Imgproc.countourArea():
+   * http://docs.opencv.org/java/2.4.9/org/opencv/imgproc/Imgproc.html#contourArea(org.opencv.core.Mat)
    * @param image the image, must be binary.
-   * @return the mat without the spurios regions.
+   * @return the binary opencv mat without the spurios regions.
    */
   @SuppressWarnings("unchecked")
   private Mat bwareopen(Mat image) {
@@ -97,16 +103,17 @@ class FieldDetector extends OpencvDetector {
           littleContours.add(contours.get(i));//saved temporarily
         }
       }
+      //finally they are filled.
       return (Mat) processor.fillContours(polishedImage, littleContours, Constants.BLACK);
     }
     return null;
   }
   
   /**
-   * Fill espurious regions.
+   * Fill espurious regions. Posiby remaining between the field and the fans.
    *
-   * @param image the image
-   * @return the mat
+   * @param image the binary opencv mat
+   * @return the opencv mat with the spurios region filled
    */
   private Mat fillEspuriousRegions(Mat image) {
     //fills possible holes that were not filled before
@@ -117,10 +124,10 @@ class FieldDetector extends OpencvDetector {
   }
   
   /**
-   * Removes the score.
+   * Removes the score. It is linked.
    *
-   * @param image the image
-   * @return the mat
+   * @param image, must be an opencv mat in binary form.
+   * @return the opencv mat without the score.
    */
   private Mat removeScore(Mat image) {
     return (Mat) processor.drawRectangle(image, 

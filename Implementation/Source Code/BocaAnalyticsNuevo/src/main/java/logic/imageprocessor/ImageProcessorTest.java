@@ -1,18 +1,34 @@
+/*
+ * @author Josué Arrieta Salas
+ * @version v0.1.1-alpha
+ */
+
 package logic.imageprocessor;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ImageProcessorTest.
+ */
 public class ImageProcessorTest {
 
-  public ImageProcessorTest(){
+  /**
+   * Instantiates a new image processor test.
+   */
+  public ImageProcessorTest() {
     System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
   }
   
+  /**
+   * Test compare image.
+   */
   @Test
   public void testCompareImage() {
     ImageProcessor processor = new OpencvImageProcessor();
@@ -24,6 +40,9 @@ public class ImageProcessorTest {
             Imgcodecs.imread("testData/1-rgb.png", Imgcodecs.IMREAD_GRAYSCALE)));
   }
   
+  /**
+   * Test paint players.
+   */
   @Test
   //es usado estilo main
   public void testPaintPlayers() {
