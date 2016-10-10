@@ -1,3 +1,8 @@
+/*
+ * @author Josué Arrieta Salas
+ * @version v0.1.1-alpha
+ */
+
 package logic.imageprocessor;
 
 import logic.Constants;
@@ -13,12 +18,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FieldDetector.
+ * Its purpose is to detect the soccer field.
+ * Players must have their uniform different to green.
+ * Referee would be detected.
+ * The soccer field must be green.
+ */
 class FieldDetector extends OpencvDetector {
 
+  /**
+   * Instantiates a new field detector.
+   * In normal usage the image is from a normal soccer match.
+   * @param image: must be in RGB format. Expected to be an OpenCV Mat.
+   */
   public FieldDetector(Mat image) {
     super(image);
   }
 
+  /* (non-Javadoc)
+   * @see logic.imageprocessor.Detector#detect()
+   */
   @Override
   public Object detect() {
     //detects the soccer field
@@ -41,6 +62,12 @@ class FieldDetector extends OpencvDetector {
     return imageWithoutScore;
   }
   
+  /**
+   * Green mask.
+   * Creates a binary mask of green pixels of an image.
+   * @param image the image in hsv format
+   * @return a binary Mat Image representing with green pixels detected
+   */
   private Mat greenMask(Mat image) {
     //crates a binary mask of green pixeles of an image
     //image must in hsv format
@@ -51,6 +78,12 @@ class FieldDetector extends OpencvDetector {
     return binaryImage;
   }
   
+  /**
+   * Bwareopen.
+   * Eliminates spurious regions of an image
+   * @param image the image, must be binary.
+   * @return the mat without the spurios regions.
+   */
   @SuppressWarnings("unchecked")
   private Mat bwareopen(Mat image) {
     /*Eliminates spurious regions*/
@@ -70,6 +103,12 @@ class FieldDetector extends OpencvDetector {
     return null;
   }
   
+  /**
+   * Fill espurious regions.
+   *
+   * @param image the image
+   * @return the mat
+   */
   private Mat fillEspuriousRegions(Mat image) {
     //fills possible holes that were not filled before
     //generally are regions close to the borders
@@ -78,6 +117,12 @@ class FieldDetector extends OpencvDetector {
     return (Mat) processor.complement(invPoolished);
   }
   
+  /**
+   * Removes the score.
+   *
+   * @param image the image
+   * @return the mat
+   */
   private Mat removeScore(Mat image) {
     return (Mat) processor.drawRectangle(image, 
         Constants.SCOREPOINT1, Constants.SCOREPOINT2, Constants.BLACK);
