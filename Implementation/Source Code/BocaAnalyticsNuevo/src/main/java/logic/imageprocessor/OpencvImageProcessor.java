@@ -28,7 +28,7 @@ import java.util.List;
  * All colors or values, are in opencv Scalar type.
  * Points are of type opencv Point.
  */
-class OpencvImageProcessor extends ImageProcessor {
+public class OpencvImageProcessor extends ImageProcessor {
 
   /**
    * Instantiates a new opencv image processor.

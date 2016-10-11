@@ -26,7 +26,7 @@ import logic.Constants;
  * Referee would be detected.
  * The soccer field must be green.
  */
-class PlayerDetector extends OpencvDetector {
+public class PlayerDetector extends OpencvDetector {
 
   /**
    * Instantiates a new player detector.

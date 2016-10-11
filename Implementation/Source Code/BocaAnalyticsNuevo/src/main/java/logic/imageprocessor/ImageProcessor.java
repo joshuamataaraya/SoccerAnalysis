@@ -10,7 +10,7 @@ package logic.imageprocessor;
 /**
  * The Class ImageProcessor. Represents basic functions of a normal image processor class.
  */
-abstract class ImageProcessor {
+public abstract class ImageProcessor {
 
   /**
    * Instantiates a new image processor.

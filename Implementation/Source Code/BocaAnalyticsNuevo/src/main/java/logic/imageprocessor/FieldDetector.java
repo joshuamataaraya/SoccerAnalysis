@@ -28,7 +28,7 @@ import java.util.List;
  * Referee would be detected.
  * The soccer field must be green.
  */
-class FieldDetector extends OpencvDetector {
+public class FieldDetector extends OpencvDetector {
 
   /**
    * Instantiates a new field detector.
