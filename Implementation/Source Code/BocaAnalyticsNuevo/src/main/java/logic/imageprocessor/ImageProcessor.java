@@ -38,7 +38,7 @@ public abstract class ImageProcessor {
   /**
    * Dilate. Dilates image.
    *
-   * @param image, can be in any format.
+   * @param image ofthe video can be in any format.
    * @return the image dilated, in the format which entered.
    */
   public abstract Object dilate(Object image);

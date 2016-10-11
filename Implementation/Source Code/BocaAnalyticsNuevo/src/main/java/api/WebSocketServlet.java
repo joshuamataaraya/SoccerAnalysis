@@ -1,3 +1,8 @@
+/*
+ * @author Adrian Lopez Quesada
+ * @version v0.1.1-alpha
+ */
+
 package api;
 
 import java.io.File;
@@ -15,26 +20,57 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class WebSocketServlet.
+ * The purpose is to communicate the Java Logic for processing a video with an html UI.
+ * It uses a Jetty's JSR-356 WebSocket to establish a connection with one User.
+ * For every new user, a new instance of the class is generated. 
+ */
 @ServerEndpoint("/vidUpload")
 public class WebSocketServlet {
 
-  static File uploadedFile = null;
-  static FileOutputStream fos = null;
+  /** The uploaded file. */
+  private static File uploadedFile = null;
+  
+  /** The file stream. */
+  
+  private FileOutputStream fileStream = null;
+  
+  /** The file name of the uploadFile. */
   private String fileName = null;
-  static final String path = "src/main/webapp/videoFiles/";
+  
+  /** The path of the uploadFile. */
+  private String path = "src/main/webapp/videoFiles/";
 
+  
+  
+  /**
+   * Open.
+   * Method executed when a session is opened. 
+   * @param session the current user's session
+   * @param conf the configuration sent by the client
+   */
   @OnOpen
-  public void open(Session session, EndpointConfig conf) {
+  public void openSession(Session session, EndpointConfig conf) {
     System.out.println("Socket opened");
   }
 
+  /**
+   * Process upload.
+   * Method executed when a client sends an buffer of bytes. 
+   * It writes the chunks sent by the client. 
+   * @param msg the buffer of bytes sent by the client
+   * @param last the parameter needed for the standard defined by the Jetty JSR-356
+   * @param session the clients current session
+   */
   @OnMessage(maxMessageSize = 2048 * 2048)
   public void processUpload(ByteBuffer msg, boolean last, Session session) {
     System.out.println("Binary Data");      
 
     while (msg.hasRemaining()) {         
       try {
-        fos.write(msg.get());
+        fileStream.write(msg.get());
       } catch (IOException exc) {               
         exc.printStackTrace();
       }
@@ -42,6 +78,12 @@ public class WebSocketServlet {
 
   }
 
+  /**
+   * On message.
+   * Method executed when a message comes from the client
+   * @param session the clients current session
+   * @param msg the message sent by the client
+   */
   @OnMessage(maxMessageSize = 2048 * 2048)
   public void onMessage(Session session, String msg) {
     System.out.println("here!");
@@ -49,14 +91,14 @@ public class WebSocketServlet {
       fileName = msg.substring(msg.indexOf(':') + 1);
       uploadedFile = new File(path + fileName);
       try {
-        fos = new FileOutputStream(uploadedFile);
+        fileStream = new FileOutputStream(uploadedFile);
       } catch (FileNotFoundException exc) {     
         exc.printStackTrace();
       }
     } else {
       try {
-        fos.flush();
-        fos.close();
+        fileStream.flush();
+        fileStream.close();
         System.out.println("End of transfer");
       } catch (IOException exc) {       
         exc.printStackTrace();
@@ -69,17 +111,34 @@ public class WebSocketServlet {
     }
   }
 
+  /**
+   * Close.
+   * Method executed when a client's session is closed
+   * @param session the client's closed session
+   * @param reason the reason why it closed, normally just disconnected.
+   */
   @OnClose
   public void close(Session session, CloseReason reason) {
     System.out.println("socket closed: " + reason.getReasonPhrase());
   }
 
+  /**
+   * Error.
+   * A type of catch within a socket's connection
+   * @param session the client's session with 
+   * @param throwable the java's throwable error
+   */
   @OnError
   public void error(Session session, Throwable throwable) {
     throwable.printStackTrace();
 
   }
   
+  /**
+   * Process video.
+   * Private method to process the video, it executes a thread
+   * @param ses the ses
+   */
   private void processVideo(Session ses) {
     int progress = 0;
     while (progress != 100) {
@@ -99,6 +158,11 @@ public class WebSocketServlet {
     }
   }
     
+  /**
+   * Process download.
+   * method that sends the new url for the client to download
+   * @param ses the current session of the client
+   */
   private void processDownload(Session ses) {
     String modFileName = fileName.substring(0, fileName.length() - 4);
     String extension = fileName.substring(fileName.length() - 4);
@@ -111,11 +175,22 @@ public class WebSocketServlet {
     }
   }
     
+  /**
+   * Processing activity.
+   * Method to encapsulate all the process activities.
+   * @param session the current client's session
+   */
   private void processingActivity(Session session) {
     processVideo(session);
     processDownload(session);
   }
   
+  /**
+   * Processing ground truth.
+   * Method to process the groundtruth when its called.
+   * Not Working currently
+   * @param ses the current client's session
+   */
   private void processingGroundTruth(Session ses) {
     try {
       ses.getBasicRemote().sendText("groundTruth");

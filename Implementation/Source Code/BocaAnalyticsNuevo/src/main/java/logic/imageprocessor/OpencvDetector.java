@@ -5,10 +5,10 @@
 
 package logic.imageprocessor;
 
+import logic.Constants;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 
-import logic.Constants;
 
 
 

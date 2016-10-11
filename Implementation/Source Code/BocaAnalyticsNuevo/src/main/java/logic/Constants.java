@@ -2,6 +2,7 @@
  * @author Josué Arrieta Salas
  * @version v0.1.1-alpha
  */
+
 package logic;
 
 import org.opencv.core.Point;

@@ -32,7 +32,7 @@ public class FieldDetector extends OpencvDetector {
 
   /**
    * Instantiates a new field detector.
-   * @param image: must be in RGB format. Expected to be an OpenCV Mat.
+   * @param image of video, must be in RGB format. Expected to be an OpenCV Mat.
    */
   public FieldDetector(Mat image) {
     super(image);
