@@ -4,10 +4,22 @@ import java.util.ArrayList;
 
 public abstract class VideoProcessor {
 	protected String filePath;
-	public VideoProcessor(String filePath){
+	protected String outFilePath;
+	protected int framesCount;
+	
+	public VideoProcessor(String filePath, String outFilePath){
 		this.filePath = filePath;
+		this.outFilePath = outFilePath;
+		openVideo();
+		setFrameCount();
 	}
-	public abstract ArrayList<Object> getVideoFrames();
-	public abstract int countFrames();
-	public abstract String createVideo(ArrayList<Object> frames);
+	protected abstract void openVideo();
+	protected abstract void setFrameCount();
+	public abstract Object readFrame();
+	public abstract void writeFrame(Object frame);
+	public abstract String saveVideo();
+	public int getFrameCount(){
+		return framesCount;
+	}
+	
 }

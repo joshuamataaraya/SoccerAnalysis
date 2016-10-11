@@ -3,56 +3,83 @@
  */
 package logic.videoprocessor;
 
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.opencv.core.Core;
+import org.opencv.*;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
+import org.opencv.video.Video;
 import org.opencv.videoio.VideoCapture;
+import org.opencv.videoio.VideoWriter;
 import org.opencv.videoio.Videoio;
+
 
 public class OpenCVVideoProcessor extends VideoProcessor {
 	
-	private int countFrames;
 	private VideoCapture video;
-	public OpenCVVideoProcessor(String filePath) {
-		super(filePath);
+	private Size size;
+	private Mat currentFrame;
+	private VideoWriter videoWriter;
+	private double fps;
+	public OpenCVVideoProcessor(String filePath, String outFilePath) {
+		super(filePath, outFilePath);
+		setVideoSize();
+		setVideoFps();
+		initializeVideoWriter();
+		initializeCurrentFrame();
+	}
+	private void setVideoSize(){
+		size = new Size((int)video.get(Videoio.CAP_PROP_FRAME_WIDTH),(int)video.get(Videoio.CAP_PROP_FRAME_HEIGHT));
+	}
+	private void setVideoFps(){
+		fps = video.get(Videoio.CAP_PROP_FPS);
+	}
+	private void initializeVideoWriter(){
+		videoWriter=new VideoWriter(this.outFilePath,
+				VideoWriter.fourcc('H','2','6','4'),
+				fps,this.size,true);
+	}
+	private void initializeCurrentFrame(){
+		currentFrame = new Mat();
+	}
+
+	@Override
+	protected void openVideo() {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-	}
-	
-	public ArrayList<Object> getVideoFrames() {
-		ArrayList<Object> frames = new ArrayList<>();
-		openVideo();
-		Mat currentMat =  new Mat();
-		while (video.read(currentMat)){
-			Mat newMat = new Mat();
-			newMat = currentMat;
-			frames.add(newMat);
-			countFrames++;
-		}
-		return frames;
-	}
-
-	@Override
-	public int countFrames() {
-		if (countFrames==0){
-			Mat mat = new Mat();
-			openVideo();
-			while (video.read(mat)){
-				countFrames++;
-			}			
-		}
-		return countFrames;
-	}
-
-	@Override
-	public String createVideo(ArrayList<Object> frames) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	private void openVideo (){
 		System.loadLibrary("opencv_ffmpeg310_64");
+		System.loadLibrary("openh264-1.4.0-win64msvc");
 		video = new VideoCapture(filePath);
+		this.outFilePath= this.outFilePath+System.currentTimeMillis()+".mp4";
+		
 	}
 
+
+	@Override
+	protected void setFrameCount() {
+		this.framesCount = (int)video.get(Videoio.CAP_PROP_FRAME_COUNT);
+	}
+
+
+	@Override
+	public String saveVideo() {
+		this.video.release();
+		videoWriter.release();
+		this.currentFrame.release();
+		return this.outFilePath;
+	}
+	@Override
+	public Object readFrame() {
+		this.video.read(this.currentFrame);
+		return this.currentFrame;
+	}
+	@Override
+	public void writeFrame(Object frame) {
+		this.videoWriter.write((Mat) frame);
+	}
 }
