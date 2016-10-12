@@ -22,6 +22,10 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import DataTransferObject.DTOVideoAnalisis;
+import controller.Controller;
+import controller.VideoAnalisisController;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class WebSocketServlet.
@@ -143,23 +147,13 @@ public class WebSocketServlet implements Observer {
    * Private method to process the video, it executes a thread
    * @param ses the ses
    */
-  private void processVideo(Session ses) {
-    int progress = 0;
-    while (progress != 100) {
-      progress++;
-      try {
-        Thread.sleep(200);
-      } catch (InterruptedException exc) {
-        // TODO Auto-generated catch block
-        exc.printStackTrace();
-      }
-      try {
-        ses.getBasicRemote().sendText("transfer");
-      } catch (IOException exc) {
-        // TODO Auto-generated catch block
-        exc.printStackTrace();
-      }
-    }
+  private DTOVideoAnalisis processVideo(Session ses) {
+    DTOVideoAnalisis vid = new DTOVideoAnalisis();
+    vid.setVideoPath(path + fileName);
+    vid.setOutVideoPath(path);
+    Controller videoProcessor = new VideoAnalisisController();
+    videoProcessor.addObserver(this);
+    return (DTOVideoAnalisis)videoProcessor.algoritm(vid);
   }
     
   /**
@@ -167,12 +161,11 @@ public class WebSocketServlet implements Observer {
    * method that sends the new url for the client to download
    * @param ses the current session of the client
    */
-  private void processDownload(Session ses) {
-    String modFileName = fileName.substring(0, fileName.length() - 4);
-    String extension = fileName.substring(fileName.length() - 4);
-    String path = "videoFiles/" + modFileName + "Edited" + extension ;
+  private void processDownload(Session ses, DTOVideoAnalisis path) {
+    String pathStr = path.getOutVideoPath();
+    pathStr = pathStr.substring(16);
     try {
-      ses.getBasicRemote().sendText(path);
+      ses.getBasicRemote().sendText(pathStr);
     } catch (IOException exc) {
       // TODO Auto-generated catch block
       exc.printStackTrace();
@@ -185,8 +178,8 @@ public class WebSocketServlet implements Observer {
    * @param session the current client's session
    */
   private void processingActivity(Session session) {
-    processVideo(session);
-    processDownload(session);
+    DTOVideoAnalisis path = processVideo(session);
+    processDownload(session, path);
   }
   
   /**

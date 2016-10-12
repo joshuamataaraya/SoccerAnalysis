@@ -51,6 +51,8 @@ public class OpenCVVideoProcessor extends VideoProcessor {
 
 	@Override
 	protected void openVideo() {
+		String libPath = System.getProperty("java.library.path");
+		System.out.println(libPath);
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		System.loadLibrary("opencv_ffmpeg310_64");
 		System.loadLibrary("openh264-1.4.0-win64msvc");
