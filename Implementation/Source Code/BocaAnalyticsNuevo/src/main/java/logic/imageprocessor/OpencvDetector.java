@@ -39,6 +39,7 @@ abstract class OpencvDetector extends Detector {
   protected Mat imfill(Mat image, Point point) {
     //Fill holes in an image
     //Point must be part of the background
+	image = (Mat)processor.drawRectangle(image, new Point(0,0), new Point(50,50), Constants.BLACK);
     Mat clone = image.clone();
     clone = (Mat) processor.floodFill(clone, point, Constants.WHITE);
     //paint background of color white

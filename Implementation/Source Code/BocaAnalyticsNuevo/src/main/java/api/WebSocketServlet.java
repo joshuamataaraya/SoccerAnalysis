@@ -10,6 +10,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.websocket.CloseReason;
 import javax.websocket.EndpointConfig;
@@ -28,7 +30,7 @@ import javax.websocket.server.ServerEndpoint;
  * For every new user, a new instance of the class is generated. 
  */
 @ServerEndpoint("/vidUpload")
-public class WebSocketServlet {
+public class WebSocketServlet implements Observer {
 
   /** The uploaded file. */
   private static File uploadedFile = null;
@@ -43,7 +45,8 @@ public class WebSocketServlet {
   /** The path of the uploadFile. */
   private String path = "src/main/webapp/videoFiles/";
 
-  
+  /** The session of the client. */
+  private Session session = null;
   
   /**
    * Open.
@@ -53,6 +56,7 @@ public class WebSocketServlet {
    */
   @OnOpen
   public void openSession(Session session, EndpointConfig conf) {
+    this.session = session;
     System.out.println("Socket opened");
   }
 
@@ -194,6 +198,16 @@ public class WebSocketServlet {
   private void processingGroundTruth(Session ses) {
     try {
       ses.getBasicRemote().sendText("groundTruth");
+    } catch (IOException exc) {
+      // TODO Auto-generated catch block
+      exc.printStackTrace();
+    }
+  }
+  
+  @Override
+  public void update(Observable o, Object arg) {
+    try {
+      session.getBasicRemote().sendText("transfer");
     } catch (IOException exc) {
       // TODO Auto-generated catch block
       exc.printStackTrace();

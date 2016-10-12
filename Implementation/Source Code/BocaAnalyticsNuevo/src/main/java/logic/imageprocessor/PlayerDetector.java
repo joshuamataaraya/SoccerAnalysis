@@ -34,7 +34,7 @@ public class PlayerDetector extends OpencvDetector {
   public PlayerDetector(Mat image) {
      super(image);
   }
-
+  
   /* (non-Javadoc)
    * @see logic.imageprocessor.Detector#detect()
    *  Uses opencv function ImgCodecs.imwrite():
@@ -110,7 +110,6 @@ public class PlayerDetector extends OpencvDetector {
     Mat variance = std.clone();
     Core.multiply(std, std, variance);
 
-    
     return variance;
   }
   
