@@ -20,6 +20,8 @@ public class VideoAnalisisController extends Controller {
 				input.getVideoPath(),
 				input.getOutVideoPath());
 		int frames = vp.getFrameCount();
+		int totalFrames = vp.getFrameCount();
+		int percentage = 0;
 		while(frames>0){
 			Mat frame = (Mat) vp.readFrame();
 			if (!frame.empty()){
@@ -27,6 +29,7 @@ public class VideoAnalisisController extends Controller {
 				vp.writeFrame(frame);
 			}
 			frames--;
+			percentage = notifyFrames(totalFrames - frames, totalFrames, percentage);
 		}
 		input.setOutVideoPath(vp.saveVideo());
 		return input;
@@ -37,5 +40,16 @@ public class VideoAnalisisController extends Controller {
 	    Detector playerDetector = new PlayerDetector(image);
 	    return (Mat) processor.paintPlayers(image, fieldDetector.detect(), playerDetector.detect());
 	}
+	
+  private int notifyFrames(int currentFrames, int totalFrames, int currentPercentage) {
+    int newPercentage = currentFrames * 100 / totalFrames;
+    System.out.println(newPercentage);
+    while (newPercentage > currentPercentage) {
+      setChanged();
+      notifyObservers();
+      currentPercentage++;
+    }
+    return currentPercentage;
+  }
 
 }
