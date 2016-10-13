@@ -46,6 +46,8 @@ public class GroundTruthController extends Controller {
           input.getGrundVideoPath());
       
       int frames = vp.getFrameCount();
+      int totalFrames = vp.getFrameCount();
+      int percentage = 0;
       diceValues = new double[frames];
       while ( frames > 0) {
         Mat frame = (Mat) vp.readFrame();
@@ -55,6 +57,7 @@ public class GroundTruthController extends Controller {
           diceValues [ frames - 1 ] = getDiceValue( frame, frameGroundTruth ) ;
         }
         frames--;
+        percentage = notifyFrames(totalFrames - frames, totalFrames, percentage);
       }
       
       //The sum and the division is to obtain the average of the values that are inside the
