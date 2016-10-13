@@ -20,6 +20,7 @@ function Control($scope) {
     var vid = document.getElementById("myVideo");
     var endMessage;
     var idFileInput;
+    var ground = false;
 
     $scope.loading = false;
     $scope.videoProcess = false;
@@ -77,11 +78,15 @@ function Control($scope) {
                 $scope.$digest();
             } else {
                 if (event.data === "groundTruth") {
-                    webSocket.close();
-                } else {
-                    $scope.downloadLink = event.data;
-                    $scope.displayVideo = "http://localhost:8080/" + event.data;
-                    webSocket.close();
+                    ground = true;
+                } else { 
+                    if (ground == true) {
+                        //alert
+                    }else {
+                        $scope.downloadLink = event.data;
+                        $scope.displayVideo = "http://localhost:8080/" + event.data;
+                        webSocket.close();
+                    }
                 }
             }
         }
