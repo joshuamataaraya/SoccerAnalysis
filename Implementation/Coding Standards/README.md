@@ -3,6 +3,10 @@ Para el estandar de JAVA no se encontro un .MD que lo contuviera, por lo que se 
 
 https://google.github.io/styleguide/javaguide.html
 
+
+Se recomienda ver la carpeta de herramientas para mejor entendimiento e instalacion de las diferentes herramientas.
+
+
 Se utilizara CheckStyle: checkstyle.sourceforge.net
 Se puede descargar en : http://eclipse-cs.sourceforge.net/#!/install
 
