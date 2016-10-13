@@ -15,7 +15,7 @@ import logic.imageprocessor.OpencvImageProcessor;
 import logic.imageprocessor.PlayerDetector;
 import logic.videoprocessor.OpenCVVideoProcessor;
 
-public class groundTruthController extends Controller{
+public class GroundTruthController extends Controller{
 
 	private ImageProcessor processor;
     private double[] diceValues;
