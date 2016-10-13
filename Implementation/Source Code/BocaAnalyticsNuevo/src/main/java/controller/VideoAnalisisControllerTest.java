@@ -1,21 +1,26 @@
+/*
+ * @author Joshua Mata Araya
+ * @version v0.1.1-alpha
+ */
+
 package controller;
 
-import static org.junit.Assert.*;
-
+import datatransferobject.DtoVideoAnalisis;
 import org.junit.Test;
 
-import DataTransferObject.DTOVideoAnalisis;
 
 public class VideoAnalisisControllerTest {
 
-	@Test
-	public void videoAnalisisAlgorithmTest() {
-		DTOVideoAnalisis dto = new DTOVideoAnalisis();
-		dto.setOutVideoPath("testData/");
-		dto.setVideoPath("testData/video2.mp4");
-		
-		VideoAnalisisController va = new VideoAnalisisController();
-		va.algoritm(dto);
-	}
+  /**
+   * Video analisis algorithm test.
+   */
+  @Test
+  public void videoAnalisisAlgorithmTest() {
+    DtoVideoAnalisis dto = new DtoVideoAnalisis();
+    dto.setOutVideoPath("testData/");
+    dto.setVideoPath("testData/video2.mp4");
+    VideoAnalisisController va = new VideoAnalisisController();
+    va.algoritm(dto);
+  }
 
 }

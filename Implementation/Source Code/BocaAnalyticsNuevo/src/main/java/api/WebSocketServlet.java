@@ -22,9 +22,9 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import DataTransferObject.DTOVideoAnalisis;
 import controller.Controller;
 import controller.VideoAnalisisController;
+import datatransferobject.DtoVideoAnalisis;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -147,15 +147,15 @@ public class WebSocketServlet implements Observer {
    * Process video.
    * Private method to process the video, it executes a thread
    * @param ses the ses
- * @throws Exception 
+   * @throws Exception An unexpected error could be generated 
    */
-  private DTOVideoAnalisis processVideo(Session ses) throws Exception {
-    DTOVideoAnalisis vid = new DTOVideoAnalisis();
+  private DtoVideoAnalisis processVideo(Session ses) throws Exception {
+    DtoVideoAnalisis vid = new DtoVideoAnalisis();
     vid.setVideoPath(path + fileName);
     vid.setOutVideoPath(path);
     Controller videoProcessor = new VideoAnalisisController();
     videoProcessor.addObserver(this);
-    return (DTOVideoAnalisis)videoProcessor.algoritm(vid);
+    return (DtoVideoAnalisis)videoProcessor.algoritm(vid);
   }
     
   /**
@@ -163,7 +163,7 @@ public class WebSocketServlet implements Observer {
    * method that sends the new url for the client to download
    * @param ses the current session of the client
    */
-  private void processDownload(Session ses, DTOVideoAnalisis path) {
+  private void processDownload(Session ses, DtoVideoAnalisis path) {
     String pathStr = path.getOutVideoPath();
     pathStr = pathStr.substring(16);
     try {
@@ -178,10 +178,10 @@ public class WebSocketServlet implements Observer {
    * Processing activity.
    * Method to encapsulate all the process activities.
    * @param session the current client's session
- * @throws Exception 
+ * @throws Exception An unexpected error could be generated
    */
   private void processingActivity(Session session) throws Exception {
-    DTOVideoAnalisis path = processVideo(session);
+    DtoVideoAnalisis path = processVideo(session);
     processDownload(session, path);
   }
   
