@@ -13,6 +13,11 @@ public abstract class VideoProcessor {
 		openVideo();
 		setFrameCount();
 	}
+	public VideoProcessor(String filePath){
+		this.filePath = filePath;
+		openVideo();
+		setFrameCount();
+	}
 	protected abstract void openVideo();
 	protected abstract void setFrameCount();
 	public abstract Object readFrame();

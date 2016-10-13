@@ -34,6 +34,12 @@ public class OpenCVVideoProcessor extends VideoProcessor {
 		initializeVideoWriter();
 		initializeCurrentFrame();
 	}
+	public OpenCVVideoProcessor(String filePath) {
+		super(filePath);
+		setVideoSize();
+		setVideoFps();
+		initializeCurrentFrame();
+	}
 	private void setVideoSize(){
 		size = new Size((int)video.get(Videoio.CAP_PROP_FRAME_WIDTH),(int)video.get(Videoio.CAP_PROP_FRAME_HEIGHT));
 	}

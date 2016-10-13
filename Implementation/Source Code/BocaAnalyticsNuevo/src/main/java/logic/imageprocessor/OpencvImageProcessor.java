@@ -205,7 +205,7 @@ public class OpencvImageProcessor extends ImageProcessor {
     if (!contours.isEmpty()) {
       finalImage = fillContours(finalImage, contours, Constants.RED);//fill all players
     }
-    Imgcodecs.imwrite("testData/blobsPintados.png", (Mat) finalImage);
+    //Imgcodecs.imwrite("testData/blobsPintados.png", (Mat) finalImage);
     return finalImage;
   }
 
@@ -220,7 +220,7 @@ public class OpencvImageProcessor extends ImageProcessor {
     Mat invertedField = complement(field);
     Mat playersMat = or(invertedField, (Mat)players);//invert and or to get the blobs in the field
     playersMat = floodFill(playersMat, Constants.STARTPOINT, Constants.BLACK);
-    Imgcodecs.imwrite("testData/blobsBinarios.png", (Mat) playersMat);
+    //Imgcodecs.imwrite("testData/blobsBinarios.png", (Mat) playersMat);
     return playersMat;
   }
 

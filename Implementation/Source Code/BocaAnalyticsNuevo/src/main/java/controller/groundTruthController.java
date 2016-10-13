@@ -5,6 +5,7 @@ import java.util.stream.DoubleStream;
 
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
 import DataTransferObject.DTOGroundTruth;
 import DataTransferObject.DTOVideoAnalisis;
@@ -24,21 +25,17 @@ public class GroundTruthController extends Controller{
 	public Object algoritm(Object dto) throws Exception {
 		DTOGroundTruth input = (DTOGroundTruth) dto;
 		OpenCVVideoProcessor vp = new OpenCVVideoProcessor(
-				input.getVideoPath(),null);
+				input.getVideoPath());
 		OpenCVVideoProcessor vpGroundTruth = new OpenCVVideoProcessor(
-				input.getGrundVideoPath(),null);
+				input.getGrundVideoPath());
 		
 		int frames = vp.getFrameCount();
 		int framesGoundTruth = vpGroundTruth.getFrameCount();
-		if (frames!= framesGoundTruth){
-			throw new Exception("The ground truth video doesn't "
-					+ "belong to the original video");
-		}
 		diceValues = new double[frames];
 		while(frames>0){
 			Mat frame = (Mat) vp.readFrame();
 			Mat frameGroundTruth = (Mat) vpGroundTruth.readFrame();
-			if (!frame.empty()){
+			if (!frame.empty() && !frameGroundTruth.empty()){
 				diceValues[frames-1] = getDiceValue(frame, frameGroundTruth);
 			}
 			frames--;
@@ -47,8 +44,10 @@ public class GroundTruthController extends Controller{
 		return input;
 	}
 	private double getDiceValue(Object mat, Object matGroundTruth){
+	    ImageProcessor processor = new OpencvImageProcessor();
 		Detector fieldDetector = new FieldDetector((Mat)mat);
 	    Detector playerDetector = new PlayerDetector((Mat)mat);
+	    Imgproc.cvtColor((Mat)matGroundTruth,(Mat) matGroundTruth,Imgproc.COLOR_BGR2GRAY);
 		Double dice = processor.dice(matGroundTruth, fieldDetector.detect(), playerDetector.detect());
 		return dice;
 	}

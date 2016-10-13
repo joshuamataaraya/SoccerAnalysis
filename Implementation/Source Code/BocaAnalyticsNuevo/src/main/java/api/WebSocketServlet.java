@@ -91,9 +91,10 @@ public class WebSocketServlet implements Observer {
    * Method executed when a message comes from the client
    * @param session the clients current session
    * @param msg the message sent by the client
+ * @throws Exception 
    */
   @OnMessage(maxMessageSize = 2048 * 2048)
-  public void onMessage(Session session, String msg) {
+  public void onMessage(Session session, String msg) throws Exception {
     System.out.println("here!");
     if (!msg.equals("end") && !msg.equals("groundTruth")) {
       fileName = msg.substring(msg.indexOf(':') + 1);
@@ -146,8 +147,9 @@ public class WebSocketServlet implements Observer {
    * Process video.
    * Private method to process the video, it executes a thread
    * @param ses the ses
+ * @throws Exception 
    */
-  private DTOVideoAnalisis processVideo(Session ses) {
+  private DTOVideoAnalisis processVideo(Session ses) throws Exception {
     DTOVideoAnalisis vid = new DTOVideoAnalisis();
     vid.setVideoPath(path + fileName);
     vid.setOutVideoPath(path);
@@ -176,8 +178,9 @@ public class WebSocketServlet implements Observer {
    * Processing activity.
    * Method to encapsulate all the process activities.
    * @param session the current client's session
+ * @throws Exception 
    */
-  private void processingActivity(Session session) {
+  private void processingActivity(Session session) throws Exception {
     DTOVideoAnalisis path = processVideo(session);
     processDownload(session, path);
   }

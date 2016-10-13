@@ -49,19 +49,19 @@ public class FieldDetector extends OpencvDetector {
     Mat imageMat = (Mat) image;
     Mat rgb = (Mat) imageMat.clone();
     Mat hsv = (Mat) processor.rgb2hsv(rgb);
-    Imgcodecs.imwrite("testData/2-hsv.png", hsv);
+    //Imgcodecs.imwrite("testData/2-hsv.png", hsv);
     Mat greenMask = greenMask(hsv);
-    Imgcodecs.imwrite("testData/3-binaria.png", greenMask);
+    //Imgcodecs.imwrite("testData/3-binaria.png", greenMask);
     Mat dilatedImage = (Mat) processor.dilate(greenMask);
-    Imgcodecs.imwrite("testData/4-dilatada.png", dilatedImage);
+    //Imgcodecs.imwrite("testData/4-dilatada.png", dilatedImage);
     Mat filledImage = imfill(dilatedImage, new Point(0,0));
-    Imgcodecs.imwrite("testData/5-rellenada.png", filledImage);
+    //Imgcodecs.imwrite("testData/5-rellenada.png", filledImage);
     Mat polishedImage = bwareopen(filledImage);
-    Imgcodecs.imwrite("testData/6-pulida.png", polishedImage);
+    //Imgcodecs.imwrite("testData/6-pulida.png", polishedImage);
     Mat finalImage = fillEspuriousRegions(polishedImage);    
-    Imgcodecs.imwrite("testData/7-finalTouch.png", finalImage);
+    //Imgcodecs.imwrite("testData/7-finalTouch.png", finalImage);
     Mat imageWithoutScore = removeScore(finalImage);
-    Imgcodecs.imwrite("testData/8-noScore.png", imageWithoutScore);
+    //Imgcodecs.imwrite("testData/8-noScore.png", imageWithoutScore);
     return imageWithoutScore;
   }
   

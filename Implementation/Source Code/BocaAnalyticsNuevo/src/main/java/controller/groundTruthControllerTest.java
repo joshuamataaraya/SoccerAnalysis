@@ -12,11 +12,13 @@ public class groundTruthControllerTest {
 	@Test
 	public void testGroundTruth() throws Exception {
 		DTOGroundTruth dto = new DTOGroundTruth();
-		dto.setVideoPath("testData/1476324147909.mp4");
-		dto.setGrundVideoPath("testData/1476324147909.mp4");
+		dto.setVideoPath("testData/inputGroundTruth.avi");
+		dto.setGrundVideoPath("testData/groundTruth.mpeg");
 		
 		GroundTruthController gt = new GroundTruthController();
-		gt.algoritm(dto);
+		dto = (DTOGroundTruth)gt.algoritm(dto);
+		double dice = dto.getDiceValue();
+		System.out.println("Dice: " + dice);
 	}
 
 }

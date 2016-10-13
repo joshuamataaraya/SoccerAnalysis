@@ -46,15 +46,15 @@ public class PlayerDetector extends OpencvDetector {
     Mat imageMat = (Mat) image;
     Mat rgb = (Mat) imageMat.clone();
     Mat hsv = (Mat) processor.rgb2hsv(rgb);
-    Imgcodecs.imwrite("testData/2-hsv.png", hsv);
+    //Imgcodecs.imwrite("testData/2-hsv.png", hsv);
     Mat variance = stdfilt(hsv);
-    Imgcodecs.imwrite("testData/varianza.png", variance);
+    //Imgcodecs.imwrite("testData/varianza.png", variance);
     variance = (Mat) processor.dilate(variance);
     Mat umbralizada = im2bw(variance);
     //set background to point (0, 70% of height):
     Mat filledImage = imfill(umbralizada, new Point(0, imageMat.height()  * 0.70));
-    Imgcodecs.imwrite("testData/jugadores.png", filledImage);
-    Imgcodecs.imwrite("testData/umbralizada.png", umbralizada);
+    //Imgcodecs.imwrite("testData/jugadores.png", filledImage);
+    //Imgcodecs.imwrite("testData/umbralizada.png", umbralizada);
     filledImage.convertTo(filledImage, 0);
     return filledImage;
   }
