@@ -4,14 +4,15 @@ This is an analysis of soccer videos
 ## Table of Contents
 1. [Requirements](#requeriments)
 2. [OpenCV Installation](#opencv-installation)
+3. [DLLs Installation](#dlls-installation)
 3. [Web Server Installation](#web-server-installation)
 
 ### Requeriments
 
-- JDK 8.0 or above
-- Tomcat 8.0 (Included inside Git)
-- Eclipse Neon EE
+- JDK 8.1 or above
+- Eclipse Neon Jee
 - OpenCV-3.1
+- DLLs
 
 ### OpenCv Installation
 1. Download the library opencv-3.1 from the followin link: https://sourceforge.net/projects/opencvlibrary/files/opencv-win/3.1.0/opencv-3.1.0.exe/download
@@ -20,28 +21,36 @@ This is an analysis of soccer videos
 4. While you are installing opencv in your Eclipse IDE, it´s important to name it "opencv-3.1".
 5. Copy the file opencv\build\bin\opencv_ffmpeg310_64.dll into opencv\build\java\x64 
 
+### DLLs Installation
+
+DLLs requiered for running the tests or/and the server full functionality.
+Copy the DLLs in the folder Dependencies and paste them on: C:\opencv\build\java\x64
+The project wont work unless you do this last step. 
+
 
 ### Web Server Installation
 
-This is used to deploy the UI interface, when it's deployed it can be accesed through "localhost:8080/WebInterface/".
-We decided to use TomCat 8.0, and we use some PATH variables from TomCat in the API package, so it's of great importance
-to use the version included inside the Git. 
+This is used to deploy the UI interface, when it's deployed it can be accesed through "localhost:8080".
+We decided to use Jetty's and Maven integrated server, so here is the basic configuration 
 
 1. Right Click on the project -> Run as -> Run on Server
 
 	![Alt text](ImagesReadme/Tutorial1.png?raw=true "Tutorial1")
-2. Select Apache Folder
+
+2. Select Maven Build - New 
 
 	![Alt text](ImagesReadme/Tutorial2.png?raw=true "Tutorial2")
 
-3. Select TomCat 8.0 Server
+3. Fill in the next three boxes highlited by the red boxes.
 
 	![Alt text](ImagesReadme/Tutorial3.png?raw=true "Tutorial3")
 
-4. In the Tomcat Installation Server option, browse and select the following path: ...\SoccerAnalysis\server\apache-tomcat-8.0.36 
+4. In the JRE Tab make sure its selected the workspace defualt JRE and it sshould be a JDK one as seen on the image, not a JRE
 
-	**Note** the dots refer to the path where the project is located.
+		![Alt text](ImagesReadme/Tutorial4.png?raw=true "Tutorial4")
 
-	![Alt text](ImagesReadme/Tutorial4.png?raw=true "Tutorial4")
+	**Note** if your default is on JRE, close the run configurations, go to Window -> Preferences -> Java -> Installed JRE's and add the jdk folder and/or check the jdk box and apply. 
 
-	TomCat should execute and you should be ready to access the web page.
+5. In the same tab, add the next VM arguments: -Djava.library.path=C:\opencv\build\java\x64 hit apply and run.
+
+			![Alt text](ImagesReadme/Tutorial5.png?raw=true "Tutorial5")
