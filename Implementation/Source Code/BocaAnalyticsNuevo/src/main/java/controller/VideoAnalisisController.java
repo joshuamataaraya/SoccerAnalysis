@@ -15,39 +15,44 @@ import logic.videoprocessor.OpenCvVideoProcessor;
 
 import org.opencv.core.Mat;
 
-
-
-
-
-
 /**
- * The Class VideoAnalisisController.
+ * The Class VideoAnalisisController is to analize a video looking for each
+ * of the players and classify them on each frame.
  */
 public class VideoAnalisisController extends Controller {
 
-  /* (non-Javadoc)
-   * @see controller.Controller#algoritm(java.lang.Object)
+  /**
+   * Is in charge of use all the logic classes needed to ensure the
+   * analisis of a video.
+   *
+   * @param dto the dto
+   * @return the object corresponding to a DtoVideoProcessor 
    */
   @Override
   public Object algoritm(Object dto) {
-    DtoVideoAnalisis input = (DtoVideoAnalisis) dto;
-    OpenCvVideoProcessor vp = new OpenCvVideoProcessor(
-        input.getVideoPath(),
-        input.getOutVideoPath());
-    int frames = vp.getFrameCount();
-    int totalFrames = vp.getFrameCount();
-    int percentage = 0;
-    while ( frames > 0 ) {
-      Mat frame = (Mat) vp.readFrame();
-      if (!frame.empty()) {
-        frame = detectPlayers(frame);
-        vp.writeFrame(frame);
+    try {
+      DtoVideoAnalisis input = (DtoVideoAnalisis) dto;
+      OpenCvVideoProcessor vp = new OpenCvVideoProcessor(
+          input.getVideoPath(),
+          input.getOutVideoPath());
+      int frames = vp.getFrameCount();
+      int totalFrames = vp.getFrameCount();
+      int percentage = 0;
+      while ( frames > 0 ) {
+        Mat frame = (Mat) vp.readFrame();
+        if (!frame.empty()) {
+          frame = detectPlayers(frame);
+          vp.writeFrame(frame);
+        }
+        frames--;
+        percentage = notifyFrames(totalFrames - frames, totalFrames, percentage);
       }
-      frames--;
-      percentage = notifyFrames(totalFrames - frames, totalFrames, percentage);
+      input.setOutVideoPath(vp.saveVideo());
+      return input;      
+    } catch (Exception exception) {
+      //notifyErrorObservers();
+      return "Not able to process the video";
     }
-    input.setOutVideoPath(vp.saveVideo());
-    return input;
   }
   
   /**

@@ -14,7 +14,6 @@ import org.opencv.videoio.VideoWriter;
 import org.opencv.videoio.Videoio;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class OpenCVVideoProcessor.
  */
@@ -38,8 +37,8 @@ public class OpenCvVideoProcessor extends VideoProcessor {
   /**
    * Instantiates a new open CV video processor.
    *
-   * @param filePath the file path
-   * @param outFilePath the out file path
+   * @param filePath the file to be analyzed.
+   * @param outFilePath the out file path where the result video has to be.
    */
   public OpenCvVideoProcessor(String filePath, String outFilePath) {
     super(filePath, outFilePath);
@@ -52,7 +51,7 @@ public class OpenCvVideoProcessor extends VideoProcessor {
   /**
    * Instantiates a new open CV video processor.
    *
-   * @param filePath the file path
+   * @param filePath the file path to be analyzed.
    */
   public OpenCvVideoProcessor(String filePath) {
     super(filePath);
@@ -62,7 +61,8 @@ public class OpenCvVideoProcessor extends VideoProcessor {
   }
   
   /**
-   * Sets the video size.
+   * Sets the video size property from the opened video.
+   * 
    */
   private void setVideoSize() {
     size = new Size((int)video.get(Videoio.CAP_PROP_FRAME_WIDTH),
@@ -70,14 +70,19 @@ public class OpenCvVideoProcessor extends VideoProcessor {
   }
   
   /**
-   * Sets the video fps.
+   * Sets the video fps property from the opened video.
+   * Uses the get method from the VideoWriter class
+   * http://docs.opencv.org/java/3.1.0/org/opencv/videoio/VideoWriter.html
+   
    */
   private void setVideoFps() {
     fps = video.get(Videoio.CAP_PROP_FPS);
   }
 
   /**
-   * Initialize video writer.
+   * Initialize video writer attribute.
+   * Uses the VideoWriter class
+   * http://docs.opencv.org/java/3.1.0/org/opencv/videoio/VideoWriter.html
    */
   private void initializeVideoWriter() {
     videoWriter = new VideoWriter(this.outFilePath,
@@ -86,7 +91,7 @@ public class OpenCvVideoProcessor extends VideoProcessor {
   }
 
   /**
-   * Initialize current frame.
+   * Initialize current frame when analysing the video.
    */
   private void initializeCurrentFrame() {
     currentFrame = new Mat();

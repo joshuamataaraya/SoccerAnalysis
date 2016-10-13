@@ -5,13 +5,14 @@
 
 package datatransferobject;
 
-public class Dtogroundtruth {
+public class DtoGroundTruth {
   private String videoPath;
   private String grundVideoPath;
   private double diceValue;
   
   /**
-   * Gets the video path.
+   * Gets the video path of the video to analyze.
+   * 
    *
    * @return the videoPath
    */
@@ -20,7 +21,7 @@ public class Dtogroundtruth {
   }
   
   /**
-   * Sets the video path.
+   * Sets the video path of the video to analyze.
    *
    * @param videoPath the videoPath to set
    */
@@ -29,7 +30,8 @@ public class Dtogroundtruth {
   }
   
   /**
-   * Gets the grund video path.
+   * Gets the grund truth video path to compare with 
+   * in the GroundTruthController class.
    *
    * @return the grundVideoPath
    */
@@ -38,7 +40,8 @@ public class Dtogroundtruth {
   }
   
   /**
-   * Sets the grund video path.
+   * Sets the grund truth video path to compare with 
+   * in the GroundTruthController class.
    *
    * @param grundVideoPath the grundVideoPath to set
    */
@@ -47,7 +50,8 @@ public class Dtogroundtruth {
   }
   
   /**
-   * Gets the dice value.
+   * Gets the dice value, the result of the calculation in the
+   * GroundTruthController will be here.
    *
    * @return the diceValue
    */
@@ -56,7 +60,8 @@ public class Dtogroundtruth {
   }
   
   /**
-   * Sets the dice value.
+   * Sets the dice value, the result of the calculation in the
+   * GroundTruthController will be here.
    *
    * @param diceValue the diceValue to set
    */

@@ -26,7 +26,7 @@ import controller.Controller;
 import controller.GroundTruthController;
 import controller.VideoAnalisisController;
 import datatransferobject.DtoVideoAnalisis;
-import datatransferobject.Dtogroundtruth;
+import datatransferobject.DtoGroundTruth;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -194,12 +194,12 @@ public class WebSocketServlet implements Observer {
    * @param ses the current client's session
    */
   private void processingGroundTruth(Session ses) {
-    Dtogroundtruth vid = new Dtogroundtruth();
+    DtoGroundTruth vid = new DtoGroundTruth();
     vid.setVideoPath(path + fileName);
     vid.setGrundVideoPath("testData/binarias.mpeg");
     Controller truthProcessor = new GroundTruthController();
     truthProcessor.addObserver(this);
-    Dtogroundtruth dto = (Dtogroundtruth) truthProcessor.algoritm(vid);
+    DtoGroundTruth dto = (DtoGroundTruth) truthProcessor.algoritm(vid);
     try {
       ses.getBasicRemote().sendText("groundTruth");
       ses.getBasicRemote().sendText(dto.getDiceValue() + "");
