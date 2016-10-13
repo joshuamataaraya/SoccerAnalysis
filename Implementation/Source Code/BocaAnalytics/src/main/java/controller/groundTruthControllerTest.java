@@ -14,6 +14,7 @@
 //
 ///**
 // * The Class GroundTruthControllerTest.
+// * The class is used as a debug rather than a test
 // */
 //public class GroundTruthControllerTest {
 //  

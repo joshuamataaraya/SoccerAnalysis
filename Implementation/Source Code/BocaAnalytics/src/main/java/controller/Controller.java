@@ -16,9 +16,8 @@ public abstract class Controller extends Observable {
   /**
    * Algoritm.
    * Method that does the purpose of the class
-   * @param dto the dto
-   * @return the object
-   * @throws Exception the exception
+   * @param dto the dto sent by the websocket
+   * @return the object, mostly a dto
    */
   public abstract Object algoritm(Object dto);
 
@@ -41,15 +40,14 @@ public abstract class Controller extends Observable {
   
   /**
    * Notify frames.
-   *
-   * @param currentFrames the current frames
-   * @param totalFrames the total frames
-   * @param currentPercentage the current percentage
-   * @return the int
+   * Method that calculate the percentage and notifies if it changed
+   * @param currentFrames the current processed frames
+   * @param totalFrames the total frames of the full video
+   * @param currentPercentage the current percentage of completness
+   * @return the int the percentage after the calculation
    */
   protected int notifyFrames(int currentFrames, int totalFrames, int currentPercentage) {
     int newPercentage = currentFrames * 100 / totalFrames;
-    System.out.println(newPercentage);
     while (newPercentage > currentPercentage) {
       setChanged();
       notifyObservers();

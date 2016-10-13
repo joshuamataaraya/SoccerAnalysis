@@ -65,8 +65,8 @@ public class GroundTruthController extends Controller {
       input.setDiceValue( DoubleStream.of( diceValues ).sum() / diceValues.length);
       return input;      
     } catch ( Exception exception) {
-      //notifyErrorObserver(); 
-      return "Not able to process the video";
+      System.out.println(exception.getMessage());
+      return dto;
     }
   }
   

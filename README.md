@@ -54,3 +54,5 @@ We decided to use Jetty's and Maven integrated server, so here is the basic conf
 5. In the same tab, add the next VM arguments: -Djava.library.path=C:\opencv\build\java\x64 hit apply and run.
 
 			![Alt text](ImagesReadme/Tutorial5.png?raw=true "Tutorial5")
+
+***Note: since the WebSocket simulates the upload of your internet speed, its highly recommended to use files with low sizes. We recommend two files located in our drive: https://drive.google.com/drive/folders/0B1b_MSFDPh5ZRXcxMF9zUmhvLXM?usp=sharing one for running a JUnit test, which uses a big size file with more resolution (more on dependencies) and the second is a small size file .mp4 which generates fairly good results and can be used for the upload on the WebBrowser.

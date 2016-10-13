@@ -63,7 +63,6 @@ public class WebSocketServlet implements Observer {
   @OnOpen
   public void openSession(Session session, EndpointConfig conf) {
     this.session = session;
-    System.out.println("Socket opened");
   }
 
   /**
@@ -75,8 +74,7 @@ public class WebSocketServlet implements Observer {
    * @param session the clients current session
    */
   @OnMessage(maxMessageSize = 2048 * 2048)
-  public void processUpload(ByteBuffer msg, boolean last, Session session) {
-    System.out.println("Binary Data");      
+  public void processUpload(ByteBuffer msg, boolean last, Session session) {      
 
     while (msg.hasRemaining()) {         
       try {
@@ -93,11 +91,9 @@ public class WebSocketServlet implements Observer {
    * Method executed when a message comes from the client
    * @param session the clients current session
    * @param msg the message sent by the client
-   * @throws Exception 
    */
   @OnMessage(maxMessageSize = 2048 * 2048)
   public void onMessage(Session session, String msg) throws Exception {
-    System.out.println("here!");
     if (!msg.equals("end") && !msg.equals("groundTruth")) {
       fileName = msg.substring(msg.indexOf(':') + 1);
       uploadedFile = new File(path + fileName);
@@ -110,7 +106,6 @@ public class WebSocketServlet implements Observer {
       try {
         fileStream.flush();
         fileStream.close();
-        System.out.println("End of transfer");
       } catch (IOException exc) {       
         exc.printStackTrace();
       }
@@ -124,7 +119,7 @@ public class WebSocketServlet implements Observer {
 
   /**
    * Close.
-   * Method executed when a client's session is closed
+   * Method executed when a client's session is closed, needed for standard
    * @param session the client's closed session
    * @param reason the reason why it closed, normally just disconnected.
    */
@@ -148,10 +143,9 @@ public class WebSocketServlet implements Observer {
   /**
    * Process video.
    * Private method to process the video, it executes a thread
-   * @param ses the ses
-   * @throws Exception An unexpected error could be generated 
+   * @param ses the current session of the client 
    */
-  private DtoVideoAnalisis processVideo(Session ses) throws Exception {
+  private DtoVideoAnalisis processVideo(Session ses) {
     DtoVideoAnalisis vid = new DtoVideoAnalisis();
     vid.setVideoPath(path + fileName);
     vid.setOutVideoPath(path);
@@ -180,9 +174,8 @@ public class WebSocketServlet implements Observer {
    * Processing activity.
    * Method to encapsulate all the process activities.
    * @param session the current client's session
- * @throws Exception An unexpected error could be generated
    */
-  private void processingActivity(Session session) throws Exception {
+  private void processingActivity(Session session) {
     DtoVideoAnalisis path = processVideo(session);
     processDownload(session, path);
   }
@@ -190,7 +183,6 @@ public class WebSocketServlet implements Observer {
   /**
    * Processing ground truth.
    * Method to process the groundtruth when its called.
-   * Not Working currently
    * @param ses the current client's session
    */
   private void processingGroundTruth(Session ses) {
@@ -212,6 +204,13 @@ public class WebSocketServlet implements Observer {
   @Override
   //Este metodo no puede cumplir el estandar de checkstyle 
   //debido a que la interface de Java Observer establece ese formato
+  
+  /**
+   * Update on notify.
+   * Method to send progress of the video beign processed.
+   * @param o the object beign observed
+   * @param arg the array sent by the observable with parameters
+   */  
   public void update(Observable o, Object arg) {
     try {
       session.getBasicRemote().sendText("transfer");
