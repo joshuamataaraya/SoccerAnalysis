@@ -10,3 +10,5 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /build/
+Implementation/Source Code/BocaAnalyticsNuevo/testData/cut1_360_processed_LAB_2iter.avi
+Implementation/Source Code/BocaAnalyticsNuevo/testData/inputGroundTruth.avi
