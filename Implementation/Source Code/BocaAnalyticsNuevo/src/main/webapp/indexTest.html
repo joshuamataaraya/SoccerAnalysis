@@ -1,0 +1,45 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="js/consumable.js"></script>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+	<div>
+		<input type="text" id="input" />
+	</div>
+	<div>
+		<input type="button" id="connectBtn" value="CONNECT"
+			ng-click="connect()" /> <input type="button" id="sendBtn"
+			value="SEND" ng-click="send()" disabled="true" />
+	</div>
+	<div id="output">
+		<p>Output</p>
+	</div>
+	
+       
+    <h2>File Upload</h2>
+    <h2>File Upload</h2>
+    Select file
+    <input type="file" id="filename" />
+    <br>
+    <input type="button" value="Connect" onclick="connectChatServer()" />
+    <br>
+    <input type="button" value="Upload" ng-click="connect()" />
+    
+    <img id="mySpinner" src="assets/img/loading.gif" ng-show="loading" />
+    
+    <div id="myProgress">
+  		<div id="myBar">
+    		<div id="label">0%</div>
+  		</div>
+	</div>
+	
+	<a href={{downloadLink}} download>Link </a>
+    
+</div>
+</body>
+</html>

@@ -22,12 +22,7 @@
 * [Application Structure](#application-structure)
 * [Angular $ Wrapper Services](#angular-$-wrapper-services)
 * [Comments](#comments)
-* JSHint
-* Constants
 
-1. [File Structure](#file-structure)
-2. [Developer](#developer)
-3. [Production](#production)
 
 #  Single Responsibility
 
@@ -420,9 +415,6 @@ Example
        .module('shared.widgets')
        .directive('acmeSharedSpinner', sharedSpinner);
 
-## Limit DOM Manipulation
-
-DOM manipulation can be difficult to test and debug. If you must manipulate the DOM directly, use a directive. However, if alternative ways can be used, such as using CSS to set styles or the animation services, Angular templating, `ngShow` or `ngHide`, use those instead.
 
 ## Restrict to Elements and Attributes
 
@@ -656,98 +648,9 @@ Example
        };
     }
 
-#  JSHint
-
-Using JS Hint for linting your JavaScript provides a first alert prior to commiting any code changes and helps promote consistency across the team. Be sure to customize the JS Hint options file and include it in source control. An example `.jshintrc` file is shown below.
-
-Example
-
-    {
-       "bitwise": true,
-       "camelcase": true,
-       "curly": true,
-       "eqeqeq": true,
-       "es3": false,
-       "forin": true,
-       "freeze": true,
-       "immed": true,
-       "indent": 4,
-       "latedef": "nofunc",
-       "newcap": true,
-       "noarg": true,
-       "noempty": true,
-       "nonbsp": true,
-       "nonew": true,
-       "plusplus": false,
-       "quotmark": "single",
-       "undef": true,
-       "unused": false,
-       "strict": false,
-       "maxparams": 10,
-       "maxdepth": 5,
-       "maxstatements": 40,
-       "maxcomplexity": 8,
-       "maxlen": 120,
-       "asi": false,
-       "boss": false,
-       "debug": false,
-       "eqnull": true,
-       "esnext": false,
-       "evil": false,
-       "expr": false,
-       "funcscope": false,
-       "globalstrict": false,
-       "iterator": false,
-       "lastsemic": false,
-       "laxbreak": false,
-       "laxcomma": false,
-       "loopfunc": true,
-       "maxerr": false,
-       "moz": false,
-       "multistr": false,
-       "notypeof": false,
-       "proto": false,
-       "scripturl": false,
-       "shadow": false,
-       "sub": true,
-       "supernew": false,
-       "validthis": false,
-       "noyield": false,
-       "browser": true,
-       "node": true,
-       "globals": {
-           "angular": false,
-           "$": false
-       }
-    }
-
-Additional information
-
-See also
-
-* [JS Hint docsumentation ][27]
-
-#  Constants
-
-Creating an AngularJS Constant for vendor libraries' global variables provides a way to inject vendor libraries that otherwise are globals. This improves code testability by allowing you to more easily know what the dependencies of your components are (avoids leaky abstractions).
-
-Example
-
-    // constants.js
-
-    /* global toastr:false, moment:false */
-    (function () {
-       'use strict';
-
-       angular
-          .module('app.core')
-          .constant('toastr', toastr)
-          .constant('moment', moment);
-    })();
 
 * [About][28]
-* __
-* __
+
 
 [1]: http://www.codestyle.co/img/codestyle-full.png
 [2]: /#guidelines
