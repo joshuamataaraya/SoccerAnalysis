@@ -93,7 +93,7 @@ public class WebSocketServlet implements Observer {
    * @param msg the message sent by the client
    */
   @OnMessage(maxMessageSize = 2048 * 2048)
-  public void onMessage(Session session, String msg) throws Exception {
+  public void onMessage(Session session, String msg) {
     if (!msg.equals("end") && !msg.equals("groundTruth")) {
       fileName = msg.substring(msg.indexOf(':') + 1);
       uploadedFile = new File(path + fileName);
