@@ -17,7 +17,7 @@ public abstract class Controller extends Observable {
    * @return the object
    * @throws Exception the exception
    */
-  public abstract Object algoritm(Object dto) throws Exception;
+  public abstract Object algoritm(Object dto);
 
   /**
    * Gets the input.
@@ -35,5 +35,24 @@ public abstract class Controller extends Observable {
    */
   public void setInput(Object input) {
     this.input = input;
+  }
+  
+  /**
+   * Notify frames.
+   *
+   * @param currentFrames the current frames
+   * @param totalFrames the total frames
+   * @param currentPercentage the current percentage
+   * @return the int
+   */
+  protected int notifyFrames(int currentFrames, int totalFrames, int currentPercentage) {
+    int newPercentage = currentFrames * 100 / totalFrames;
+    System.out.println(newPercentage);
+    while (newPercentage > currentPercentage) {
+      setChanged();
+      notifyObservers();
+      currentPercentage++;
+    }
+    return currentPercentage;
   }
 }

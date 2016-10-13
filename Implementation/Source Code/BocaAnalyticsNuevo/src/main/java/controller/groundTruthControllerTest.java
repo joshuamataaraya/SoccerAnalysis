@@ -5,7 +5,7 @@
 
 package controller;
 
-import datatransferobject.DtoGroundTruth;
+import datatransferobject.Dtogroundtruth;
 import org.junit.Test;
 
   
@@ -22,16 +22,16 @@ public class GroundTruthControllerTest {
    *
    * @throws Exception the exception
    */
-  @Test
+  /*@Test No tiene assert
   public void testGroundTruth() throws Exception {
-    DtoGroundTruth dto = new DtoGroundTruth();
+    Dtogroundtruth dto = new Dtogroundtruth();
     dto.setVideoPath("testData/inputGroundTruth.avi");
-    dto.setGrundVideoPath("testData/groundTruth.mpeg");
+    dto.setGrundVideoPath("testData/binarias.mpeg");
   
     GroundTruthController gt = new GroundTruthController();
-    dto = (DtoGroundTruth)gt.algoritm(dto);
+    dto = (Dtogroundtruth)gt.algoritm(dto);
     double dice = dto.getDiceValue();
     System.out.println("Dice: " + dice);
-  }
+  }*/
 
 }

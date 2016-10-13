@@ -63,23 +63,4 @@ public class VideoAnalisisController extends Controller {
     return (Mat) processor.paintPlayers(image, fieldDetector.detect(), playerDetector.detect());
   }
 
-  /**
-   * Notify frames.
-   *
-   * @param currentFrames the current frames
-   * @param totalFrames the total frames
-   * @param currentPercentage the current percentage
-   * @return the int
-   */
-  private int notifyFrames(int currentFrames, int totalFrames, int currentPercentage) {
-    int newPercentage = currentFrames * 100 / totalFrames;
-    System.out.println(newPercentage);
-    while (newPercentage > currentPercentage) {
-      setChanged();
-      notifyObservers();
-      currentPercentage++;
-    }
-    return currentPercentage;
-  }
-
 }

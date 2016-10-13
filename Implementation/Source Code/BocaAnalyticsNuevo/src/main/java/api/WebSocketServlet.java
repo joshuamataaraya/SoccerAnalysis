@@ -23,8 +23,10 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import controller.Controller;
+import controller.GroundTruthController;
 import controller.VideoAnalisisController;
 import datatransferobject.DtoVideoAnalisis;
+import datatransferobject.Dtogroundtruth;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -91,7 +93,7 @@ public class WebSocketServlet implements Observer {
    * Method executed when a message comes from the client
    * @param session the clients current session
    * @param msg the message sent by the client
- * @throws Exception 
+   * @throws Exception 
    */
   @OnMessage(maxMessageSize = 2048 * 2048)
   public void onMessage(Session session, String msg) throws Exception {
@@ -115,7 +117,7 @@ public class WebSocketServlet implements Observer {
       if (msg.equals("end")) { 
         processingActivity(session);
       } else {
-        processingGroundTruth(session); //Momentaneo mientra se programa el groundtruth
+        processingGroundTruth(session); 
       }
     }
   }
@@ -192,8 +194,15 @@ public class WebSocketServlet implements Observer {
    * @param ses the current client's session
    */
   private void processingGroundTruth(Session ses) {
+    Dtogroundtruth vid = new Dtogroundtruth();
+    vid.setVideoPath(path + fileName);
+    vid.setGrundVideoPath("testData/binarias.mpeg");
+    Controller truthProcessor = new GroundTruthController();
+    truthProcessor.addObserver(this);
+    Dtogroundtruth dto = (Dtogroundtruth) truthProcessor.algoritm(vid);
     try {
       ses.getBasicRemote().sendText("groundTruth");
+      ses.getBasicRemote().sendText(dto.getDiceValue() + "");
     } catch (IOException exc) {
       // TODO Auto-generated catch block
       exc.printStackTrace();
@@ -201,6 +210,8 @@ public class WebSocketServlet implements Observer {
   }
   
   @Override
+  //Este metodo no puede cumplir el estandar de checkstyle 
+  //debido a que la interface de Java Observer establece ese formato
   public void update(Observable o, Object arg) {
     try {
       session.getBasicRemote().sendText("transfer");

@@ -5,7 +5,7 @@
 
 package datatransferobject;
 
-public class DtoGroundTruth {
+public class Dtogroundtruth {
   private String videoPath;
   private String grundVideoPath;
   private double diceValue;

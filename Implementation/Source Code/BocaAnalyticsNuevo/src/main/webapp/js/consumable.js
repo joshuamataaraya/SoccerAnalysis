@@ -81,7 +81,8 @@ function Control($scope) {
                     ground = true;
                 } else { 
                     if (ground == true) {
-                        //alert
+                        alert("Resultado del DICE: " + event.data);
+                        webSocket.close();
                     }else {
                         $scope.downloadLink = event.data;
                         $scope.displayVideo = "http://localhost:8080/" + event.data;

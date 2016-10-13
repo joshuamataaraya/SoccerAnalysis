@@ -5,7 +5,7 @@
 
 package controller;
 
-import datatransferobject.DtoGroundTruth;
+import datatransferobject.Dtogroundtruth;
 import logic.imageprocessor.Detector;
 import logic.imageprocessor.FieldDetector;
 import logic.imageprocessor.ImageProcessor;
@@ -26,14 +26,16 @@ public class GroundTruthController extends Controller {
    * @see controller.Controller#algoritm(java.lang.Object)
    */
   @Override
-  public Object algoritm(Object dto) throws Exception  {
-    DtoGroundTruth input = (DtoGroundTruth) dto;
+  public Object algoritm(Object dto) {
+    Dtogroundtruth input = (Dtogroundtruth) dto;
     OpenCvVideoProcessor vp = new OpenCvVideoProcessor(
         input.getVideoPath());
     OpenCvVideoProcessor vpGroundTruth = new OpenCvVideoProcessor(
         input.getGrundVideoPath());
 
     int frames = vp.getFrameCount();
+    int totalFrames = vp.getFrameCount();
+    int percentage = 0;
     diceValues = new double[frames];
     while ( frames > 0) {
       Mat frame = (Mat) vp.readFrame();
@@ -42,6 +44,7 @@ public class GroundTruthController extends Controller {
         diceValues [ frames - 1 ] = getDiceValue( frame, frameGroundTruth ) ;
       }
       frames--;
+      percentage = notifyFrames(totalFrames - frames, totalFrames, percentage);
     }
     input.setDiceValue( DoubleStream.of( diceValues ).sum() / diceValues.length);
     return input;
