@@ -1,24 +1,37 @@
+/*
+ * @author Joshua Mata Araya
+ * @version v0.1.1-alpha
+ */
+
 package controller;
 
-import static org.junit.Assert.*;
-
+import datatransferobject.DtoGroundTruth;
 import org.junit.Test;
 
-import DataTransferObject.DTOGroundTruth;
-import DataTransferObject.DTOVideoAnalisis;
+  
 
-public class groundTruthControllerTest {
 
-	@Test
-	public void testGroundTruth() throws Exception {
-		DTOGroundTruth dto = new DTOGroundTruth();
-		dto.setVideoPath("testData/inputGroundTruth.avi");
-		dto.setGrundVideoPath("testData/groundTruth.mpeg");
-		
-		GroundTruthController gt = new GroundTruthController();
-		dto = (DTOGroundTruth)gt.algoritm(dto);
-		double dice = dto.getDiceValue();
-		System.out.println("Dice: " + dice);
-	}
+
+/**
+ * The Class GroundTruthControllerTest.
+ */
+public class GroundTruthControllerTest {
+  
+  /**
+   * Test ground truth.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testGroundTruth() throws Exception {
+    DtoGroundTruth dto = new DtoGroundTruth();
+    dto.setVideoPath("testData/inputGroundTruth.avi");
+    dto.setGrundVideoPath("testData/groundTruth.mpeg");
+  
+    GroundTruthController gt = new GroundTruthController();
+    dto = (DtoGroundTruth)gt.algoritm(dto);
+    double dice = dto.getDiceValue();
+    System.out.println("Dice: " + dice);
+  }
 
 }
