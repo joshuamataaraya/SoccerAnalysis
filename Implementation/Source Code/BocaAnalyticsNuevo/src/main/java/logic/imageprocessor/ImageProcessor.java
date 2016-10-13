@@ -138,9 +138,9 @@ public abstract class ImageProcessor {
   /**
    * Dice Metric. Gets dice metric, in this case between a ground truth and a image.
    *
-   * @param groundTruth the ground truth, of the expected image blobs.
-   * @param field the field. Binary image of the field.
-   * @param players the players. Binary image of the players.
+   * @param groundTruth the ground truth, of the expected image blobs. Must be in one channel.
+   * @param field the field. Binary image of the field. Must be in one channel.
+   * @param players the players. Binary image of the players. Must be in one channel.
    * @return the value obtained, expected to be between 0.0 and 1.
    */
   public abstract double dice(Object groundTruth, Object field, Object players);

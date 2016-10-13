@@ -40,9 +40,7 @@ public class ImageProcessorTest {
             Imgcodecs.imread("testData/1-rgb.png", Imgcodecs.IMREAD_GRAYSCALE)));
   }
   
-  /**
-   * Test paint players.
-   */
+  /*
   @Test
   //es usado estilo main
   public void testPaintPlayers() {
@@ -55,6 +53,6 @@ public class ImageProcessorTest {
     Mat groundTruth = Imgcodecs.imread("testData/groundTruth.png",Imgcodecs.IMREAD_GRAYSCALE);
     Double dice = processor.dice(groundTruth, fieldDetector.detect(), playerDetector.detect());
     System.out.println(dice);
-  }
+  }*/
 
 }
