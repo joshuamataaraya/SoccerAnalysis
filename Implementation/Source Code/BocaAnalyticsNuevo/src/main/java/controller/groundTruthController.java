@@ -28,36 +28,43 @@ public class GroundTruthController extends Controller {
   /** The dice values. */
   private double [ ] diceValues;
   
-  /* (non-Javadoc)
+  /**
    * It is expected to receive an Object able to be 
    * casted to the class DTOGoundTruth.
    * The return Object contains the results according to the dto DTOGoundTruth
-   * @see controller.Controller#algoritm(java.lang.Object)
+   *
+   * @param dto the dto
+   * @return the object DtoGroundTruth
    */
   @Override
-  public Object algoritm(Object dto) throws Exception  {
-    DtoGroundTruth input = (DtoGroundTruth) dto;
-    OpenCvVideoProcessor vp = new OpenCvVideoProcessor(
-        input.getVideoPath());
-    OpenCvVideoProcessor vpGroundTruth = new OpenCvVideoProcessor(
-        input.getGrundVideoPath());
-    
-    int frames = vp.getFrameCount();
-    diceValues = new double[frames];
-    while ( frames > 0) {
-      Mat frame = (Mat) vp.readFrame();
-      Mat frameGroundTruth = (Mat) vpGroundTruth.readFrame();
-      if ( !frame.empty() && !frameGroundTruth.empty() ) {
-        //insert a new calculated value on the array of diceValues
-        diceValues [ frames - 1 ] = getDiceValue( frame, frameGroundTruth ) ;
+  public Object algoritm(Object dto) {
+    try {
+      DtoGroundTruth input = (DtoGroundTruth) dto;
+      OpenCvVideoProcessor vp = new OpenCvVideoProcessor(
+          input.getVideoPath());
+      OpenCvVideoProcessor vpGroundTruth = new OpenCvVideoProcessor(
+          input.getGrundVideoPath());
+      
+      int frames = vp.getFrameCount();
+      diceValues = new double[frames];
+      while ( frames > 0) {
+        Mat frame = (Mat) vp.readFrame();
+        Mat frameGroundTruth = (Mat) vpGroundTruth.readFrame();
+        if ( !frame.empty() && !frameGroundTruth.empty() ) {
+          //insert a new calculated value on the array of diceValues
+          diceValues [ frames - 1 ] = getDiceValue( frame, frameGroundTruth ) ;
+        }
+        frames--;
       }
-      frames--;
+      
+      //The sum and the division is to obtain the average of the values that are inside the
+      //diveValues ArrayList
+      input.setDiceValue( DoubleStream.of( diceValues ).sum() / diceValues.length);
+      return input;      
+    } catch ( Exception exception) {
+      //notifyErrorObserver(); 
+      return "Not able to process the video";
     }
-    
-    //The sum and the division is to obtain the average of the values that are inside the
-    //diveValues ArrayList
-    input.setDiceValue( DoubleStream.of( diceValues ).sum() / diceValues.length);
-    return input;
   }
   
   /**

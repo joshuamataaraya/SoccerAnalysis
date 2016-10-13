@@ -14,15 +14,6 @@ public class DtoVideoAnalisis {
   /** The video path. */
   private String videoPath;
   
-  /**
-   * Gets the video path.
-   *
-   * @return the video path
-   */
-  public String getVideoPath() {
-    return videoPath;
-  }
-
   /** The out video path. */
   private String outVideoPath;
   
@@ -33,7 +24,17 @@ public class DtoVideoAnalisis {
   private int timeOfProcessing;
   
   /**
-   * Sets the video path.
+   * Gets the video path of the video to analyze in the class
+   * VideoAnalisisController.
+   *
+   * @return the video path
+   */
+  public String getVideoPath() {
+    return videoPath;
+  }
+  
+  /**
+   * Sets the video path to analyze.
    *
    * @param videoPath the videoPath to set
    */
@@ -42,7 +43,7 @@ public class DtoVideoAnalisis {
   }
   
   /**
-   * Gets the time of processing.
+   * Gets the time of processing all the video.
    *
    * @return the timeOfProcessing
    */
@@ -51,7 +52,7 @@ public class DtoVideoAnalisis {
   }
   
   /**
-   * Sets the time of processing.
+   * Sets the time of processing all the video.
    *
    * @param timeOfProcessing the timeOfProcessing to set
    */
@@ -60,7 +61,7 @@ public class DtoVideoAnalisis {
   }
   
   /**
-   * Gets the out video path.
+   * Gets the out video path where the result video is stored.
    *
    * @return the outVideoPath
    */
@@ -69,7 +70,7 @@ public class DtoVideoAnalisis {
   }
   
   /**
-   * Sets the out video path.
+   * Sets the out video path where the result video is stored.
    *
    * @param outVideoPath the outVideoPath to set
    */
@@ -78,7 +79,7 @@ public class DtoVideoAnalisis {
   }
   
   /**
-   * Gets the report path.
+   * Gets the report path of the results in the analysis.
    *
    * @return the reportPath
    */
@@ -87,7 +88,7 @@ public class DtoVideoAnalisis {
   }
   
   /**
-   * Sets the report path.
+   * Sets the report path of the results in the analysis.
    *
    * @param reportPath the reportPath to set
    */
