@@ -5,16 +5,14 @@
 
 package logic.imageprocessor;
 
+import logic.Constants;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfDouble;
 import org.opencv.core.Point;
-import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
-import logic.Constants;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -36,7 +34,7 @@ public class PlayerDetector extends OpencvDetector {
   public PlayerDetector(Mat image) {
      super(image);
   }
-
+  
   /* (non-Javadoc)
    * @see logic.imageprocessor.Detector#detect()
    *  Uses opencv function ImgCodecs.imwrite():
@@ -112,7 +110,6 @@ public class PlayerDetector extends OpencvDetector {
     Mat variance = std.clone();
     Core.multiply(std, std, variance);
 
-    
     return variance;
   }
   

@@ -31,5 +31,4 @@ public abstract class Detector {
   public void setImage(Object image) {
     this.image = image;
   }
-
 }
