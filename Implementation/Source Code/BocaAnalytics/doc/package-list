@@ -1,0 +1,6 @@
+api
+controller
+datatransferobject
+logic
+logic.imageprocessor
+logic.videoprocessor
