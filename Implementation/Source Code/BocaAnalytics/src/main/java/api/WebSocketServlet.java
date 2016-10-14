@@ -5,6 +5,12 @@
 
 package api;
 
+import controller.Controller;
+import controller.GroundTruthController;
+import controller.VideoAnalisisController;
+import datatransferobject.DtoGroundTruth;
+import datatransferobject.DtoVideoAnalisis;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,6 +18,8 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Observable;
 import java.util.Observer;
+
+
 
 import javax.websocket.CloseReason;
 import javax.websocket.EndpointConfig;
@@ -22,11 +30,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import controller.Controller;
-import controller.GroundTruthController;
-import controller.VideoAnalisisController;
-import datatransferobject.DtoVideoAnalisis;
-import datatransferobject.DtoGroundTruth;
+
 
 // TODO: Auto-generated Javadoc
 /**
@@ -211,7 +215,7 @@ public class WebSocketServlet implements Observer {
    * @param o the object beign observed
    * @param arg the array sent by the observable with parameters
    */  
-  public void update(Observable o, Object arg) {
+  public void update(Observable obse, Object arg) {
     try {
       session.getBasicRemote().sendText("transfer");
     } catch (IOException exc) {

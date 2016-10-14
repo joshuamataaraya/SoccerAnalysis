@@ -10,7 +10,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.opencv.core.Core;
-import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 
 // TODO: Auto-generated Javadoc
