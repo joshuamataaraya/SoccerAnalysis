@@ -53,7 +53,7 @@ public class WebSocketServlet implements Observer {
   private String fileName = null;
   
   /** The path of the uploadFile. */
-  private String path = "src/main/webapp/videoFiles/";
+  private String path = "src/main/webapp/VideoFiles/";
 
   /** The session of the client. */
   private Session session = null;
