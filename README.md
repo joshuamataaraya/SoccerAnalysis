@@ -24,7 +24,7 @@ This is an analysis of soccer videos
 ### DLLs Installation
 
 DLLs requiered for running the tests or/and the server full functionality.
-Copy the DLLs in the folder Dependencies and paste them on: C:\opencv\build\java\x64
+Copy the DLLs from the folder Dependencies in the project and paste them on: C:\opencv\build\java\x64
 The project wont work unless you do this last step. 
 
 
@@ -33,7 +33,7 @@ The project wont work unless you do this last step.
 This is used to deploy the UI interface, when it's deployed it can be accesed through "localhost:8080".
 We decided to use Jetty's and Maven integrated server, so here is the basic configuration 
 
-1. Right Click on the project -> Run as -> Run on Server
+1. Right Click on the project -> Run as -> Run Configurations
 
 	![Alt text](ImagesReadme/Tutorial1.png?raw=true "Tutorial1")
 
@@ -47,12 +47,12 @@ We decided to use Jetty's and Maven integrated server, so here is the basic conf
 
 4. In the JRE Tab make sure its selected the workspace defualt JRE and it sshould be a JDK one as seen on the image, not a JRE
 
-		![Alt text](ImagesReadme/Tutorial4.png?raw=true "Tutorial4")
+	![Alt text](ImagesReadme/Tutorial4.png?raw=true "Tutorial4")
 
 	**Note** if your default is on JRE, close the run configurations, go to Window -> Preferences -> Java -> Installed JRE's and add the jdk folder and/or check the jdk box and apply. 
 
 5. In the same tab, add the next VM arguments: -Djava.library.path=C:\opencv\build\java\x64 hit apply and run.
 
-			![Alt text](ImagesReadme/Tutorial5.png?raw=true "Tutorial5")
+	![Alt text](ImagesReadme/Tutorial5.png?raw=true "Tutorial5")
 
 ***Note: since the WebSocket simulates the upload of your internet speed, its highly recommended to use files with low sizes. We recommend two files located in our drive: https://drive.google.com/drive/folders/0B1b_MSFDPh5ZRXcxMF9zUmhvLXM?usp=sharing one for running a JUnit test, which uses a big size file with more resolution (more on dependencies) and the second is a small size file .mp4 which generates fairly good results and can be used for the upload on the WebBrowser.
