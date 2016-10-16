@@ -79,8 +79,10 @@ function Control($scope) {
             } else {
                 if (event.data === "groundTruth") {
                     ground = true;
+                    idFileInput = "filenameVideo";
+                    $scope.send();
                 } else { 
-                    if (ground == true) {
+                    if (ground) {
                         alert("Resultado del DICE: " + event.data);
                         webSocket.close();
                     }else {
@@ -98,6 +100,7 @@ function Control($scope) {
         */
         function onclose() {
             $scope.videoProcess = false;
+            $scope.ground = false;
             $scope.buttonsAvailable = true;
             width = 0;
             $scope.$digest();
@@ -114,7 +117,7 @@ function Control($scope) {
         $scope.loading = true;
         $scope.$digest();
         var file = document.getElementById(idFileInput).files[0];
-        if (file === "undefined") {
+        if (!file) {
             webSocket.close();
         } else {
             webSocket.send("filename:" + file.name);

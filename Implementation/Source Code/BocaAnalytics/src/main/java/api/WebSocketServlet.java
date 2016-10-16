@@ -58,6 +58,13 @@ public class WebSocketServlet implements Observer {
   /** The session of the client. */
   private Session session = null;
   
+  /** Boolean to specify which file of the Groundtruth has entered. */
+  private boolean firstFilein = false;
+  
+  /** String of the groundtruth file name */
+  private String groundFileName;
+  
+  
   /**
    * Open.
    * Method executed when a session is opened. 
@@ -107,6 +114,7 @@ public class WebSocketServlet implements Observer {
         exc.printStackTrace();
       }
     } else {
+      System.out.println(msg);
       try {
         fileStream.flush();
         fileStream.close();
@@ -116,7 +124,17 @@ public class WebSocketServlet implements Observer {
       if (msg.equals("end")) { 
         processingActivity(session);
       } else {
-        processingGroundTruth(session); 
+        if (!firstFilein) {
+          firstFilein = true;
+          groundFileName = path + fileName; 
+          try {
+            session.getBasicRemote().sendText("groundTruth");
+          } catch (IOException exc) {
+            exc.printStackTrace();
+          }
+        } else {
+          processingGroundTruth(session);
+        }
       }
     }
   }
@@ -129,6 +147,7 @@ public class WebSocketServlet implements Observer {
    */
   @OnClose
   public void close(Session session, CloseReason reason) {
+    firstFilein = false;
     System.out.println("socket closed: " + reason.getReasonPhrase());
   }
 
@@ -192,12 +211,11 @@ public class WebSocketServlet implements Observer {
   private void processingGroundTruth(Session ses) {
     DtoGroundTruth vid = new DtoGroundTruth();
     vid.setVideoPath(path + fileName);
-    vid.setGrundVideoPath("testData/binarias.mpeg");
+    vid.setGrundVideoPath(groundFileName);
     Controller truthProcessor = new GroundTruthController();
     truthProcessor.addObserver(this);
     DtoGroundTruth dto = (DtoGroundTruth) truthProcessor.algoritm(vid);
     try {
-      ses.getBasicRemote().sendText("groundTruth");
       ses.getBasicRemote().sendText(dto.getDiceValue() + "");
     } catch (IOException exc) {
       // TODO Auto-generated catch block

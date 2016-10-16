@@ -50,8 +50,8 @@ public class VideoAnalisisController extends Controller {
       input.setOutVideoPath(vp.saveVideo());
       return input;      
     } catch (Exception exception) {
-      //notifyErrorObservers();
-      return "Not able to process the video";
+      System.out.println(exception.getMessage());
+      return dto;
     }
   }
   
