@@ -72,6 +72,8 @@ function Control($scope) {
         * @param {Event} event object sent from the server containing data
         */
         function onmessage(event) {
+        	console.log(ground);
+        	console.log(event.data);
             if (event.data === "transfer") {
                 $scope.loading = false;
                 $scope.moveBar();
@@ -100,7 +102,7 @@ function Control($scope) {
         */
         function onclose() {
             $scope.videoProcess = false;
-            $scope.ground = false;
+            ground = false;
             $scope.buttonsAvailable = true;
             width = 0;
             $scope.$digest();

@@ -56,3 +56,5 @@ We decided to use Jetty's and Maven integrated server, so here is the basic conf
 	![Alt text](ImagesReadme/Tutorial5.png?raw=true "Tutorial5")
 
 ***Note: since the WebSocket simulates the upload of your internet speed, its highly recommended to use files with low sizes. We recommend two files located in our drive: https://drive.google.com/drive/folders/0B1b_MSFDPh5ZRXcxMF9zUmhvLXM?usp=sharing one for running a JUnit test, which uses a big size file with more resolution (more on dependencies) and the second is a small size file .mp4 which generates fairly good results and can be used for the upload on the WebBrowser.
+
+Also, the web page was designed for Google Chrome, take that into account. You need to select the file and press the "Subir video" button for the analysis to start. Also for the Groundtruth, select the video file and the groundtruth file and then upload the video with the "subir video" button under the Groundtruth Category. There's a small bug and problemas with optimization when doing multiple uploads on the same client. It's highly recommended to restart the server between uploads on these earlier versions. 
