@@ -34,11 +34,11 @@ public class OpencvImageProcessor extends ImageProcessor {
    */
   public OpencvImageProcessor() {  }
 
-  /* (non-Javadoc)
+  /**
+   *  Uses opencv core.inRange().
+   *  http://docs.opencv.org/java/2.4.2/org/opencv/core/Core.html
    * @see logic.imageprocessor.ImageProcessor#mask(java.lang.Object,
    *  java.lang.Object, java.lang.Object)
-   *  Uses opencv core.inRange():
-   *  http://docs.opencv.org/java/2.4.2/org/opencv/core/Core.html
    */
   @Override
   public Mat mask(Object image, Object alphaMin, Object alphaMax) {
@@ -47,10 +47,10 @@ public class OpencvImageProcessor extends ImageProcessor {
     return binaryImage;
   }
 
-  /* (non-Javadoc)
-   * @see logic.imageprocessor.ImageProcessor#rgb2hsv(java.lang.Object)
-   * Uses OpenCV function Imgproc.cvtColor():
+  /**
+   * Uses OpenCV function Imgproc.cvtColor().
    * http://docs.opencv.org/java/2.4.9/org/opencv/imgproc/Imgproc.html
+   * @see logic.imageprocessor.ImageProcessor#rgb2hsv(java.lang.Object)
    */
   @Override
   public Mat rgb2hsv(Object image) {
@@ -61,10 +61,10 @@ public class OpencvImageProcessor extends ImageProcessor {
     return hsv;
   }
 
-  /* (non-Javadoc)
-   * @see logic.imageprocessor.ImageProcessor#dilate(java.lang.Object)
-   * uses Opencv function Imagproc.dilate():
+  /**
+   * uses Opencv function Imagproc.dilate().
    * http://docs.opencv.org/java/2.4.9/org/opencv/imgproc/Imgproc.html
+   * @see logic.imageprocessor.ImageProcessor#dilate(java.lang.Object)
    */
   @Override
   public Mat dilate(Object image) {
@@ -73,10 +73,10 @@ public class OpencvImageProcessor extends ImageProcessor {
     return dilatedMat;
   }
 
-  /* (non-Javadoc)
-   * @see logic.imageprocessor.ImageProcessor#complement(java.lang.Object)
-   * Uses Opencv function Core.bitwise_not():
+  /**
+   * Uses Opencv function Core.bitwise_not().
    * http://docs.opencv.org/java/2.4.2/org/opencv/core/Core.html
+   * @see logic.imageprocessor.ImageProcessor#complement(java.lang.Object)
    */
   @Override
   public Mat complement(Object image) {
@@ -85,10 +85,10 @@ public class OpencvImageProcessor extends ImageProcessor {
     return invertedImage;
   }
 
-  /* (non-Javadoc)
-   * @see logic.imageprocessor.ImageProcessor#or(java.lang.Object, java.lang.Object)
-   * Uses Opencv function Core.bitwise_or():
+  /**
+   * Uses Opencv function Core.bitwise_or().
    * http://docs.opencv.org/java/2.4.2/org/opencv/core/Core.html
+   * @see logic.imageprocessor.ImageProcessor#or(java.lang.Object, java.lang.Object)
    */
   @Override
   public Mat or(Object image1, Object image2) {
@@ -97,11 +97,10 @@ public class OpencvImageProcessor extends ImageProcessor {
     return orImage;
   }
 
-  /* (non-Javadoc)
-   * @see logic.imageprocessor.ImageProcessor#floodFill(java.lang.Object, 
-   * java.lang.Object, java.lang.Object)
-   * Uses opencv function Imgproc.floodFill():
+  /**
+   * Uses opencv function Imgproc.floodFill().
    * http://docs.opencv.org/java/2.4.9/org/opencv/imgproc/Imgproc.html
+   * @see logic.imageprocessor.ImageProcessor#floodFill(java.lang.Object, java.lang.Object, java.lang.Object)
    */
   @Override
   public Mat floodFill(Object image, Object point, Object color) {
@@ -113,11 +112,10 @@ public class OpencvImageProcessor extends ImageProcessor {
     return matImageClone;
   }
 
-  /* (non-Javadoc)
-   * @see logic.imageprocessor.ImageProcessor#drawRectangle(java.lang.Object, 
-   * java.lang.Object, java.lang.Object, java.lang.Object)
-   * Uses opencv function Imgproc.rectangle():
+  /**
+   * Uses opencv function Imgproc.rectangle().
    * http://docs.opencv.org/java/2.4.9/org/opencv/imgproc/Imgproc.html
+   * @see logic.imageprocessor.ImageProcessor#drawRectangle(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)
    */
   @Override
   public Mat drawRectangle(Object image, Object point1, Object point2, Object color) {
@@ -127,11 +125,10 @@ public class OpencvImageProcessor extends ImageProcessor {
     return matImageClone;
   }
 
-  /* (non-Javadoc)
-   * @see logic.imageprocessor.ImageProcessor#fillContours(java.lang.Object, 
-   * java.lang.Object, java.lang.Object)
-   * Uses opencv function Imgproc.drawContours():
+  /**
+   * Uses opencv function Imgproc.drawContours().
    * http://docs.opencv.org/java/2.4.9/org/opencv/imgproc/Imgproc.html
+   * @see logic.imageprocessor.ImageProcessor#fillContours(java.lang.Object, java.lang.Object, java.lang.Object)
    */
   @SuppressWarnings("unchecked")
   @Override
@@ -142,10 +139,10 @@ public class OpencvImageProcessor extends ImageProcessor {
     return clonedImage;
   }
 
-  /* (non-Javadoc)
-   * @see logic.imageprocessor.ImageProcessor#findContours(java.lang.Object)
-   * Uses opencv function Imgproc.findContours():
+  /**
+   * Uses opencv function Imgproc.findContours().
    * http://docs.opencv.org/java/2.4.9/org/opencv/imgproc/Imgproc.html
+   * @see logic.imageprocessor.ImageProcessor#findContours(java.lang.Object)
    */
   @Override
   public List<MatOfPoint> findContours(Object image) {
@@ -155,10 +152,10 @@ public class OpencvImageProcessor extends ImageProcessor {
     return contours;
   }
 
-  /* (non-Javadoc)
-   * @see logic.imageprocessor.ImageProcessor#compareImage(java.lang.Object, java.lang.Object)
-   * Uses opencv functions: Core.countNonZero() and Core.Compare:
+  /**
+   * Uses opencv functions. Core.countNonZero() and Core.Compare.
    * http://docs.opencv.org/java/2.4.2/org/opencv/core/Core.html
+   * @see logic.imageprocessor.ImageProcessor#compareImage(java.lang.Object, java.lang.Object)
    */
   @Override
   public Boolean compareImage(Object image1, Object image2) {
@@ -174,10 +171,10 @@ public class OpencvImageProcessor extends ImageProcessor {
     return Core.countNonZero(result) == 0;
   }
 
-  /* (non-Javadoc)
-   * @see logic.imageprocessor.ImageProcessor#hh(java.lang.Object)
-   * Uses opencv function Core.split():
+  /**
+   * Uses opencv function Core.split().
    * http://docs.opencv.org/java/2.4.2/org/opencv/core/Core.html
+   * @see logic.imageprocessor.ImageProcessor#hh(java.lang.Object)
    */
   @Override
   public Object hh(Object image) {
@@ -187,11 +184,10 @@ public class OpencvImageProcessor extends ImageProcessor {
     return channel.get(0);
   }
 
-  /* (non-Javadoc)
-   * @see logic.imageprocessor.ImageProcessor#paintPlayers(java.lang.Object,
-   *  java.lang.Object, java.lang.Object)
-   *  Uses opencv function ImgCodecs.imwrite():
+  /**
+   *  Uses opencv function ImgCodecs.imwrite().
    *  http://docs.opencv.org/java/3.0.0/org/opencv/imgcodecs/Imgcodecs.html
+   * @see logic.imageprocessor.ImageProcessor#paintPlayers(java.lang.Object, java.lang.Object, java.lang.Object)
    */
   @Override
   public Object paintPlayers(Object originalImage, Object field, Object players) {
@@ -209,10 +205,10 @@ public class OpencvImageProcessor extends ImageProcessor {
   }
 
 
-  /* (non-Javadoc)
-   * @see logic.imageprocessor.ImageProcessor#getPlayers(java.lang.Object, java.lang.Object)
-   *  Uses opencv function ImgCodecs.imwrite():
+  /**
+   *  Uses opencv function ImgCodecs.imwrite().
    *  http://docs.opencv.org/java/3.0.0/org/opencv/imgcodecs/Imgcodecs.html
+   * @see logic.imageprocessor.ImageProcessor#getPlayers(java.lang.Object, java.lang.Object)
    */
   @Override
   public Object getPlayers(Object field, Object players) {
@@ -223,13 +219,12 @@ public class OpencvImageProcessor extends ImageProcessor {
     return playersMat;
   }
 
-  /* (non-Javadoc)
-   * @see logic.imageprocessor.ImageProcessor#dice(java.lang.Object, 
-   * java.lang.Object, java.lang.Object)
-   * Uses opencv function: Core.countNonZero(), Core.bitwise_and():
+  /**
+   * Uses opencv function: Core.countNonZero(), Core.bitwise_and().
    * http://docs.opencv.org/java/2.4.2/org/opencv/core/Core.html
-   * For more information about the dice metric:
+   * For more information about the dice metric.
    * https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient
+   * @see logic.imageprocessor.ImageProcessor#dice(java.lang.Object, java.lang.Object, java.lang.Object)
    */
   @Override
   public double dice(Object groundTruth, Object field, Object players) {

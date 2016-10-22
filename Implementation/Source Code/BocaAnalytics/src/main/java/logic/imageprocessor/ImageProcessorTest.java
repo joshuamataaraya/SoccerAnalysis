@@ -26,7 +26,7 @@ public class ImageProcessorTest {
   }
   
   /**
-   * Test compare image.
+   * Test compare image. 
    */
   @Test
   public void testCompareImage() {

@@ -26,7 +26,7 @@ public class PlayerDetectorTest {
   }
   
   /**
-   * Test detect.
+   * Test detect. 
    */
   @Test
   public void testDetect() {

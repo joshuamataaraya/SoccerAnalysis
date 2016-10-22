@@ -15,7 +15,7 @@ import org.opencv.core.Point;
 // TODO: Auto-generated Javadoc
 /**
  * The Class OpencvDetector. Detects objects especially for the OpenCV framework.
- * To represent images uses Mat.
+ * To represent images uses Mat. Every method uses it.
  */
 abstract class OpencvDetector extends Detector {
 

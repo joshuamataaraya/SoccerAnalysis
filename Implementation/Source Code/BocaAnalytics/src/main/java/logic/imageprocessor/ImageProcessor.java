@@ -38,7 +38,7 @@ public abstract class ImageProcessor {
   /**
    * Dilate. Dilates image.
    *
-   * @param image ofthe video can be in any format.
+   * @param image of the video can be in any format.
    * @return the image dilated, in the format which entered.
    */
   public abstract Object dilate(Object image);
@@ -112,7 +112,7 @@ public abstract class ImageProcessor {
    * Hh. Gets the H of an HSV image.
    *
    * @param image the image in hsv format.
-   * @return the h channel.
+   * @return the h channel. Another image.
    */
   public abstract Object hh(Object image);
   

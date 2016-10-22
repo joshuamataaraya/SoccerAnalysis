@@ -14,7 +14,7 @@ import org.opencv.imgcodecs.Imgcodecs;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class FieldDetectorTest. Test FieldDetector funcionality
+ * The Class FieldDetectorTest. Test FieldDetector funcionality.
  */
 public class FieldDetectorTest {
 

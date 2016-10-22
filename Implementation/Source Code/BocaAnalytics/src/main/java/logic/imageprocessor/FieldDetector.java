@@ -37,10 +37,10 @@ public class FieldDetector extends OpencvDetector {
     super(image);
   }
 
-  /* (non-Javadoc)
-   * @see logic.imageprocessor.Detector#detect()
-   *  Uses opencv function ImgCodecs.imwrite():
+  /** 
+   *  Uses opencv function ImgCodecs.imwrite().
    *  http://docs.opencv.org/java/3.0.0/org/opencv/imgcodecs/Imgcodecs.html
+   *  @see logic.imageprocessor.Detector#detect()
    */
   @Override
   public Object detect() {
@@ -67,8 +67,8 @@ public class FieldDetector extends OpencvDetector {
   /**
    * Green mask.
    * Creates a binary mask of green pixels of an image.
-   * @param image the image in hsv format
-   * @return a binary Mat Image representing with green pixels detected
+   * @param image the image in hsv format. Must be an opencv mat.
+   * @return a binary opencv Mat Image representing with green pixels detected
    */
   private Mat greenMask(Mat image) {
     //crates a binary mask of green pixeles of an image
@@ -85,7 +85,7 @@ public class FieldDetector extends OpencvDetector {
    * Eliminates spurious regions of an image
    * Uses: OpenCV function Imgproc.countourArea():
    * http://docs.opencv.org/java/2.4.9/org/opencv/imgproc/Imgproc.html#contourArea(org.opencv.core.Mat)
-   * @param image the image, must be binary.
+   * @param image the image, must be binary opencv mat.
    * @return the binary opencv mat without the spurios regions.
    */
   @SuppressWarnings("unchecked")

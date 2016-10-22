@@ -7,6 +7,7 @@ package logic.imageprocessor;
 
 /**
  * The Class Detector.
+ * Detects an object in a give image.
  */
 public abstract class Detector {
   protected Object image;

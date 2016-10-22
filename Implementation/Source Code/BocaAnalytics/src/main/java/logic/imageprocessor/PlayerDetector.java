@@ -21,7 +21,8 @@ import org.opencv.imgproc.Imgproc;
  * https://github.com/joshuamataaraya/SoccerAnalysis/blob/master/Requirements/User%20Needs.pdf
  * Players must have their uniform different to green.
  * Referee would be detected.
- * The soccer field must be green.
+ * Ball would be detected.
+ * The soccer field must be green. No snow.
  */
 public class PlayerDetector extends OpencvDetector {
 
@@ -34,10 +35,10 @@ public class PlayerDetector extends OpencvDetector {
      super(image);
   }
   
-  /* (non-Javadoc)
+  /**
+   * Uses opencv function ImgCodecs.imwrite().
+   * http://docs.opencv.org/java/3.0.0/org/opencv/imgcodecs/Imgcodecs.html
    * @see logic.imageprocessor.Detector#detect()
-   *  Uses opencv function ImgCodecs.imwrite():
-   *  http://docs.opencv.org/java/3.0.0/org/opencv/imgcodecs/Imgcodecs.html
    */
   @Override
   public Object detect() {
