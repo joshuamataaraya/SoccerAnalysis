@@ -9,6 +9,7 @@ import java.util.Observable;
 
 /**
  * The Class Controller is the interface of all the logic of the program.
+ * It extends the Java.util.Observable to notify the UI of the video process.
  */
 public abstract class Controller extends Observable {
   private Object input ;
@@ -40,11 +41,15 @@ public abstract class Controller extends Observable {
   
   /**
    * Notify frames.
-   * Method that calculate the percentage and notifies if it changed
-   * @param currentFrames the current processed frames
-   * @param totalFrames the total frames of the full video
-   * @param currentPercentage the current percentage of completness
-   * @return the int the percentage after the calculation
+   * Method that calculate the percentage of frames processed
+   *     by a simple rule of third, if the value changes it also notifies
+   *     its observers about it.
+   * @param currentFrames the int containing the amount of frames processed
+   * @param totalFrames the int containing the total frames of the video
+   * @param currentPercentage the int containing the current percentage of frames
+   *     processed
+   * @return the int of the percentage, it can be the same as the parameter currentPercentage
+   *     if the value didnt change or a new one if it changed.
    */
   protected int notifyFrames(int currentFrames, int totalFrames, int currentPercentage) {
     int newPercentage = currentFrames * 100 / totalFrames;
