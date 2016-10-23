@@ -37,12 +37,12 @@ public class OpencvImageProcessor extends ImageProcessor {
   /**
    *  Uses opencv core.inRange().
    *  http://docs.opencv.org/java/2.4.2/org/opencv/core/Core.html
-   * @see logic.imageprocessor.ImageProcessor#mask(java.lang.Object,
-   *  java.lang.Object, java.lang.Object)
+   * @see logic.imageprocessor.ImageProcessor#mask(java.lang.Object,java.lang.Object, java.lang.Object)
    */
   @Override
   public Mat mask(Object image, Object alphaMin, Object alphaMax) {
     Mat binaryImage = new Mat();
+    //search for pixels between min and max, and creates a binary image.
     Core.inRange((Mat )image, (Scalar) alphaMin, (Scalar) alphaMax, binaryImage);
     return binaryImage;
   }
@@ -55,8 +55,8 @@ public class OpencvImageProcessor extends ImageProcessor {
   @Override
   public Mat rgb2hsv(Object image) {
     //receives an image in rgb format, and transforms it into hsv
-    
     Mat hsv = new Mat();
+    //make conversion
     Imgproc.cvtColor((Mat)image, hsv, Imgproc.COLOR_RGB2HSV);
     return hsv;
   }
@@ -68,7 +68,8 @@ public class OpencvImageProcessor extends ImageProcessor {
    */
   @Override
   public Mat dilate(Object image) {
-    Mat dilatedMat = new Mat(); 
+    Mat dilatedMat = new Mat();
+    //opencv dilate
     Imgproc.dilate((Mat) image, dilatedMat, new Mat()); 
     return dilatedMat;
   }
@@ -93,6 +94,7 @@ public class OpencvImageProcessor extends ImageProcessor {
   @Override
   public Mat or(Object image1, Object image2) {
     Mat orImage = new Mat();
+    //same size and dimensions
     Core.bitwise_or((Mat) image1, (Mat) image2, orImage);//or between images
     return orImage;
   }
@@ -106,7 +108,9 @@ public class OpencvImageProcessor extends ImageProcessor {
   public Mat floodFill(Object image, Object point, Object color) {
     Mat matImage = (Mat) image;
     Mat matImageClone = matImage.clone();
+    //create a mask. In this case it's basically empty.
     Mat mask = new Mat(matImageClone.rows() + 2, matImageClone.cols() + 2, CvType.CV_8UC1);
+    //fill it with a given color, in a given point.
     Imgproc.floodFill(matImageClone, mask, (Point) point, (Scalar) color);
     //starts to fill in point
     return matImageClone;
@@ -121,6 +125,7 @@ public class OpencvImageProcessor extends ImageProcessor {
   public Mat drawRectangle(Object image, Object point1, Object point2, Object color) {
     Mat matImage = (Mat) image;
     Mat matImageClone = matImage.clone();
+    //draw a rectangle according to two points and a color.
     Imgproc.rectangle(matImageClone, (Point) point1, (Point) point2, (Scalar) color, -1);
     return matImageClone;
   }
@@ -135,6 +140,7 @@ public class OpencvImageProcessor extends ImageProcessor {
   public Mat fillContours(Object image, Object contours, Object color) {
     Mat imageMat = (Mat) image;
     Mat clonedImage = imageMat.clone();
+    //fill a image, with a list of countours; with a given color.
     Imgproc.drawContours(clonedImage, (List<MatOfPoint>) contours, -1, (Scalar)color,-1);
     return clonedImage;
   }
@@ -147,6 +153,7 @@ public class OpencvImageProcessor extends ImageProcessor {
   @Override
   public List<MatOfPoint> findContours(Object image) {
     List<MatOfPoint> contours = new ArrayList<>();//all contorus are saved here
+    //find all countours of the image.
     Imgproc.findContours((Mat) image, contours, new Mat(), 
         Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE, new Point(0,0));
     return contours;
@@ -164,10 +171,12 @@ public class OpencvImageProcessor extends ImageProcessor {
     Mat matImage2 = (Mat) image2;
     if (matImage1.cols() != matImage2.cols()
         || matImage1.rows() != matImage2.rows() || matImage1.dims() != matImage2.dims()) {
-      return false;//image must have the same dimensions
+      return false;//image must have the same dimensions; and same size.
     }
     Mat result = new Mat();
-    Core.compare(matImage1, matImage2, result, 1);       
+    //if substracting both images
+    Core.compare(matImage1, matImage2, result, 1);
+    //and have the same quantity of cero pixels, then must be the same image.
     return Core.countNonZero(result) == 0;
   }
 
@@ -180,6 +189,7 @@ public class OpencvImageProcessor extends ImageProcessor {
   public Object hh(Object image) {
     //gets H of an HSV image
     List<Mat> channel = new ArrayList<>();
+    //splits channels to get H channel
     Core.split((Mat) image, channel);
     return channel.get(0);
   }
@@ -214,6 +224,7 @@ public class OpencvImageProcessor extends ImageProcessor {
   public Object getPlayers(Object field, Object players) {
     Mat invertedField = complement(field);
     Mat playersMat = or(invertedField, (Mat)players);//invert and or to get the blobs in the field
+    //fill the background of the field, so we do not paint it :)
     playersMat = floodFill(playersMat, Constants.STARTPOINT, Constants.BLACK);
     //Imgcodecs.imwrite("testData/blobsBinarios.png", (Mat) playersMat);
     return playersMat;
@@ -230,11 +241,15 @@ public class OpencvImageProcessor extends ImageProcessor {
   public double dice(Object groundTruth, Object field, Object players) {
     //dice index between groundTruth and image
     Mat playersMat = (Mat) getPlayers(field, players);
+    //get how many player pixels they really are
     double playerPixels = Core.countNonZero(playersMat);
+    //get how many players pixels they must be
     double groundTruthPixels = Core.countNonZero((Mat) groundTruth);
     Mat andMat = new Mat();
+    //get how many players they are that are in both images
     Core.bitwise_and(playersMat, (Mat) groundTruth, andMat);
     double andMatPixels =  Core.countNonZero(andMat);
+    //formula of dice metric
     return (2 * andMatPixels) / (playerPixels + groundTruthPixels);
   }
 }

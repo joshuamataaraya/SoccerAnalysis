@@ -44,17 +44,21 @@ public class FieldDetector extends OpencvDetector {
    */
   @Override
   public Object detect() {
-    //detects the soccer field
+    //detects the soccer field. Follows algorithm, see javadocs.
     Mat imageMat = (Mat) image;
     Mat rgb = (Mat) imageMat.clone();
+    //transforms it into HSV.
     Mat hsv = (Mat) processor.rgb2hsv(rgb);
     //Imgcodecs.imwrite("testData/2-hsv.png", hsv);
+    //get greenish pixels of the field
     Mat greenMask = greenMask(hsv);
     //Imgcodecs.imwrite("testData/3-binaria.png", greenMask);
     Mat dilatedImage = (Mat) processor.dilate(greenMask);
     //Imgcodecs.imwrite("testData/4-dilatada.png", dilatedImage);
+    //fills players
     Mat filledImage = imfill(dilatedImage, new Point(0,0));
     //Imgcodecs.imwrite("testData/5-rellenada.png", filledImage);
+    //fill spurios regions in the background
     Mat polishedImage = bwareopen(filledImage);
     //Imgcodecs.imwrite("testData/6-pulida.png", polishedImage);
     Mat finalImage = fillEspuriousRegions(polishedImage);    
@@ -74,9 +78,11 @@ public class FieldDetector extends OpencvDetector {
     //crates a binary mask of green pixeles of an image
     //image must in hsv format
     Scalar alfaMin = new Scalar(Constants.GREEN - Constants.SENSITIVITY, 
-        Constants.SV, Constants.SV); 
+        Constants.SV, Constants.SV);//min value that the pixels can have
     Scalar alfaMax = new Scalar(Constants.GREEN + Constants.SENSITIVITY, 255, 255); 
+    //maxvalue that the pixels can have
     Mat binaryImage = (Mat) processor.mask((Mat) image, alfaMin, alfaMax);
+    //apply the mask to detect those pixels between that values
     return binaryImage;
   }
   
@@ -95,9 +101,11 @@ public class FieldDetector extends OpencvDetector {
     List<MatOfPoint> littleContours = new ArrayList<>();//little contours are saved here 
     Mat polishedImage = image.clone();
     Mat clonedImage = image.clone();
+    //get all contours
     contours = (List<MatOfPoint>) processor.findContours(clonedImage);
     if (!contours.isEmpty()) {
       for (int i = 0; i < contours.size(); i++) {
+        //if countours are smaller than the given size
         if (Imgproc.contourArea((contours.get(i))) < Constants.MAXSIZE) {
           littleContours.add(contours.get(i));//saved temporarily
         }
@@ -126,9 +134,10 @@ public class FieldDetector extends OpencvDetector {
    * Removes the score. It is linked.
    *
    * @param image, must be an opencv mat in binary form.
-   * @return the opencv mat without the score.
+   * @return the opencv binary mat without the score.
    */
   private Mat removeScore(Mat image) {
+    //draws a rectable in a given position, to remove the static score.
     return (Mat) processor.drawRectangle(image, 
         Constants.SCOREPOINT1, Constants.SCOREPOINT2, Constants.BLACK);
   }

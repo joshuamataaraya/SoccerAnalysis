@@ -42,19 +42,23 @@ public class PlayerDetector extends OpencvDetector {
    */
   @Override
   public Object detect() {
-    //detects the players
+    //detects the players. Follows algorithm. See javadocs.
     Mat imageMat = (Mat) image;
     Mat rgb = (Mat) imageMat.clone();
+    //transforms it into rgb
     Mat hsv = (Mat) processor.rgb2hsv(rgb);
     //Imgcodecs.imwrite("testData/2-hsv.png", hsv);
+    //get local variance
     Mat variance = stdfilt(hsv);
     //Imgcodecs.imwrite("testData/varianza.png", variance);
     variance = (Mat) processor.dilate(variance);
     Mat umbralizada = im2bw(variance);
     //set background to point (0, 70% of height):
+    //fill spurious regions
     Mat filledImage = imfill(umbralizada, new Point(0, imageMat.height()  * 0.70));
     //Imgcodecs.imwrite("testData/jugadores.png", filledImage);
     //Imgcodecs.imwrite("testData/umbralizada.png", umbralizada);
+    //converts it into binary image
     filledImage.convertTo(filledImage, 0);
     return filledImage;
   }
@@ -70,6 +74,7 @@ public class PlayerDetector extends OpencvDetector {
    */
   private Mat normalizeImage(Mat image, int minValue, int maxValue) {
     Mat clone = image.clone();
+    //normalize image between 2 given values.
     Core.normalize(clone, clone, minValue, maxValue, Core.NORM_MINMAX);
     return clone;
   }
@@ -88,25 +93,30 @@ public class PlayerDetector extends OpencvDetector {
     
     //uses classical formula of standar deviation = sqrt(E(x-u)^2)
     Mat mu = hh.clone();
+    //Get E(X)
     Imgproc.blur(hh, mu, Constants.windowSize);
     
     Mat h2 = hh.clone();
     Core.multiply(hh, hh, h2);
     
+    // get(E(X^2))
     Mat mu2 = h2.clone();
     Imgproc.blur(h2, mu2, Constants.windowSize);
     
+    //GET(E(X)^2)
     Mat mu22 = mu.clone();
     Core.multiply(mu, mu, mu22);
     
+    //GET [(E(X^2))- (E(X)^2)]
     Mat sub = mu2.clone();
     Core.subtract(mu2, mu22, sub);
     
     //get local standard deviation
     Mat std = sub.clone();
+    // apply sqrt to [(E(X^2))- (E(X)^2)]
     Core.sqrt(sub, std);
     
-    //get local variance
+    //get local variance. It is std^2.
     Mat variance = std.clone();
     Core.multiply(std, std, variance);
 
@@ -123,6 +133,7 @@ public class PlayerDetector extends OpencvDetector {
   private double graythresh(Mat image) {
     Mat clone = image.clone();
     clone.convertTo(clone, CvType.CV_8UC1);
+    //values between 0 and 255 are searched
     double umbral = Imgproc.threshold(clone, clone, 0, 255, 
         Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
     return umbral;

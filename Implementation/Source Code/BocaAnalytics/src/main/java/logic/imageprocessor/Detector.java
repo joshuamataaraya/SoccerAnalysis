@@ -10,7 +10,7 @@ package logic.imageprocessor;
  * Detects an object in a give image.
  */
 public abstract class Detector {
-  protected Object image;
+  protected Object image;//image to be processed
   protected ImageProcessor processor;
   
   /**
