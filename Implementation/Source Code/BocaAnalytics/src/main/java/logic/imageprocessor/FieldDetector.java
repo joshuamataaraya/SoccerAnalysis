@@ -65,6 +65,13 @@ public class FieldDetector extends OpencvDetector {
     //Imgcodecs.imwrite("testData/7-finalTouch.png", finalImage);
     Mat imageWithoutScore = removeScore(finalImage);
     //Imgcodecs.imwrite("testData/8-noScore.png", imageWithoutScore);
+    greenMask.release();
+    rgb.release();
+    hsv.release();
+    //dilatedImage.release();
+    filledImage.release();
+    polishedImage.release();
+    finalImage.release();
     return imageWithoutScore;
   }
   
