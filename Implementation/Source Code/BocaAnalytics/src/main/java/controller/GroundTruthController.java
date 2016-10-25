@@ -39,24 +39,33 @@ public class GroundTruthController extends Controller {
   @Override
   public Object algoritm(Object dto) {
     try {
+      //Cast to DtoGroundTruth the parameter
       DtoGroundTruth input = (DtoGroundTruth) dto;
+      //Initialize the class from openCV to process the video to compare
       OpenCvVideoProcessor vp = new OpenCvVideoProcessor(
           input.getVideoPath());
+      //Initialize the class form openCV to process the Groud Truth video
       OpenCvVideoProcessor vpGroundTruth = new OpenCvVideoProcessor(
           input.getGrundVideoPath());
       
-      int frames = vp.getFrameCount();
-      int totalFrames = vp.getFrameCount();
+      int frames = vp.getFrameCount(); //get frames count form the input video
+      int totalFrames = vp.getFrameCount(); //get frames count from ground truth video
       int percentage = 0;
       diceValues = new double[frames];
+      //Each frame in the input video is been compared with each frame from the 
+      //gound truth.
       while ( frames > 0) {
+        //read the next frame from each video
         Mat frame = (Mat) vp.readFrame();
         Mat frameGroundTruth = (Mat) vpGroundTruth.readFrame();
+        
+        //check if each frame is not empty
         if ( !frame.empty() && !frameGroundTruth.empty() ) {
           //insert a new calculated value on the array of diceValues
           diceValues [ frames - 1 ] = getDiceValue( frame, frameGroundTruth ) ;
         }
         frames--;
+        //notifies the observers the status of the analysis
         percentage = notifyFrames(totalFrames - frames, totalFrames, percentage);
       }
       
@@ -80,10 +89,17 @@ public class GroundTruthController extends Controller {
    * @return the dice value
    */
   private double getDiceValue( Object mat, Object matGroundTruth ) {
+    //Initialize the image processor
     ImageProcessor processor = new OpencvImageProcessor();
+
+    //Initialize the classes to detect elements on the images
     Detector fieldDetector = new FieldDetector((Mat)mat);
     Detector playerDetector = new PlayerDetector((Mat)mat);
+    
+    //opencv class to transform images to Imgproc.COLOR_BGR2GRAY type.
     Imgproc.cvtColor((Mat)matGroundTruth,(Mat) matGroundTruth,Imgproc.COLOR_BGR2GRAY);
+    
+    //get the dice value of the analysis of the two images
     Double dice = processor.dice(matGroundTruth, fieldDetector.detect(), playerDetector.detect());
     return dice;
   }

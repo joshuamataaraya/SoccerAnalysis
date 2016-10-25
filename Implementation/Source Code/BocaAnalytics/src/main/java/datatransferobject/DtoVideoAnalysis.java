@@ -9,7 +9,7 @@ package datatransferobject;
 /**
  * The Class DtoVideoAnalisis.
  */
-public class DtoVideoAnalisis {
+public class DtoVideoAnalysis {
   
   /** The video path. */
   private String videoPath;

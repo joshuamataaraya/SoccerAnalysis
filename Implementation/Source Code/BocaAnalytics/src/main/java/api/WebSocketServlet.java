@@ -9,7 +9,7 @@ import controller.Controller;
 import controller.GroundTruthController;
 import controller.VideoAnalisisController;
 import datatransferobject.DtoGroundTruth;
-import datatransferobject.DtoVideoAnalisis;
+import datatransferobject.DtoVideoAnalysis;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -218,13 +218,13 @@ public class WebSocketServlet implements Observer {
    *     gotten from the onMessage method.
    * @return the dto (DtoVideoAnalisis) containing the new URL to access the processed video.
    */
-  private DtoVideoAnalisis processVideo(Session ses) {
-    DtoVideoAnalisis vid = new DtoVideoAnalisis();
+  private DtoVideoAnalysis processVideo(Session ses) {
+    DtoVideoAnalysis vid = new DtoVideoAnalysis();
     vid.setVideoPath(path + fileName); //combines path + filename
     vid.setOutVideoPath(path); // seths output path
     Controller videoProcessor = new VideoAnalisisController(); //init controller
     videoProcessor.addObserver(this); //add this class as an observer for the video process
-    return (DtoVideoAnalisis)videoProcessor.algoritm(vid); // executes the algorithm 
+    return (DtoVideoAnalysis)videoProcessor.algoritm(vid); // executes the algorithm 
     //and returns the DTO
   }
     
@@ -238,7 +238,7 @@ public class WebSocketServlet implements Observer {
    * @param path the DTOVideoAnalisis which contains the new path of the
    *     processed video
    */
-  private void processDownload(Session ses, DtoVideoAnalisis path) {
+  private void processDownload(Session ses, DtoVideoAnalysis path) {
     String pathStr = path.getOutVideoPath();
     pathStr = pathStr.substring(16); //substring so html can access the file
     try {
@@ -256,7 +256,7 @@ public class WebSocketServlet implements Observer {
    *     OnMessage method.
    */
   private void processingActivity(Session session) {
-    DtoVideoAnalisis path = processVideo(session);
+    DtoVideoAnalysis path = processVideo(session);
     processDownload(session, path);
   }
   

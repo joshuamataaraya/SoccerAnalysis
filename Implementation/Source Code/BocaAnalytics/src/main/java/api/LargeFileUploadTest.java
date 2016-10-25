@@ -6,7 +6,7 @@
 package api;
 
 import controller.VideoAnalisisController;
-import datatransferobject.DtoVideoAnalisis;
+import datatransferobject.DtoVideoAnalysis;
 import org.junit.Test;
 
 /**
@@ -21,7 +21,7 @@ public class LargeFileUploadTest {
    */
   @Test
   public void videoAnalisisAlgorithmTest() {
-    DtoVideoAnalisis dto = new DtoVideoAnalisis();
+    DtoVideoAnalysis dto = new DtoVideoAnalysis();
     dto.setOutVideoPath("testData/");
     dto.setVideoPath("testData/inputGroundTruth.avi");
     VideoAnalisisController va = new VideoAnalisisController();

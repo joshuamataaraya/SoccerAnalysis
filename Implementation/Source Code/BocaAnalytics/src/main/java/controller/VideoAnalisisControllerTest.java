@@ -5,7 +5,7 @@
 
 package controller;
 
-import datatransferobject.DtoVideoAnalisis;
+import datatransferobject.DtoVideoAnalysis;
 import org.junit.Test;
 
 
@@ -17,7 +17,7 @@ public class VideoAnalisisControllerTest {
    */
   @Test
   public void videoAnalisisAlgorithmTest() {
-    DtoVideoAnalisis dto = new DtoVideoAnalisis();
+    DtoVideoAnalysis dto = new DtoVideoAnalysis();
     dto.setOutVideoPath("testData/");
     dto.setVideoPath("testData/video2.mp4");
     VideoAnalisisController va = new VideoAnalisisController();

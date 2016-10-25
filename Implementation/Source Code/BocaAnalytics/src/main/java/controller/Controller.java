@@ -52,11 +52,13 @@ public abstract class Controller extends Observable {
    *     if the value didnt change or a new one if it changed.
    */
   protected int notifyFrames(int currentFrames, int totalFrames, int currentPercentage) {
-    int newPercentage = currentFrames * 100 / totalFrames;
-    while (newPercentage > currentPercentage) {
-      setChanged();
-      notifyObservers();
-      currentPercentage++;
+    int newPercentage = currentFrames * 100 / totalFrames; 
+    // sets the new percentage of the processed frames
+    while (newPercentage > currentPercentage) { //compares new percentage with old one
+      //if the percentage changed
+      setChanged(); // observable class method
+      notifyObservers(); //observable notification to observers
+      currentPercentage++; //changes value for return
     }
     return currentPercentage;
   }

@@ -5,7 +5,7 @@
 
 package controller;
 
-import datatransferobject.DtoVideoAnalisis;
+import datatransferobject.DtoVideoAnalysis;
 import logic.imageprocessor.Detector;
 import logic.imageprocessor.FieldDetector;
 import logic.imageprocessor.ImageProcessor;
@@ -31,22 +31,33 @@ public class VideoAnalisisController extends Controller {
   @Override
   public Object algoritm(Object dto) {
     try {
-      DtoVideoAnalisis input = (DtoVideoAnalisis) dto;
+      // Cast to DtoVideoAnalysis class
+      DtoVideoAnalysis input = (DtoVideoAnalysis) dto;
+      
+      //Initialize the class to analyze the video
       OpenCvVideoProcessor vp = new OpenCvVideoProcessor(
           input.getVideoPath(),
           input.getOutVideoPath());
+      
       int frames = vp.getFrameCount();
       int totalFrames = vp.getFrameCount();
       int percentage = 0;
+      
+      //detects the players on each frame of the video.
       while ( frames > 0 ) {
         Mat frame = (Mat) vp.readFrame();
         if (!frame.empty()) {
+          //detect all the players in the current frame that is been analyzed
           frame = detectPlayers(frame);
+          //Write the frame analyzed on the result video
           vp.writeFrame(frame);
         }
         frames--;
+        
+        //Notify the observers the current status of the analysis
         percentage = notifyFrames(totalFrames - frames, totalFrames, percentage);
       }
+      //Save the video on a path and stores the path on the result DTO
       input.setOutVideoPath(vp.saveVideo());
       return input;      
     } catch (Exception exception) {
