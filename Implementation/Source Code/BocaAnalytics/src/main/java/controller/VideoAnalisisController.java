@@ -16,17 +16,17 @@ import logic.videoprocessor.OpenCvVideoProcessor;
 import org.opencv.core.Mat;
 
 /**
- * The Class VideoAnalisisController is to analize a video looking for each
- * of the players and classify them on each frame.
+ * The Class VideoAnalisisController is to analyze a video looking for each
+ * of the players and classify them on each frame. In the current version 
+ * it just looks for each player on the video.
  */
 public class VideoAnalisisController extends Controller {
 
   /**
    * Is in charge of use all the logic classes needed to ensure the
-   * analisis of a video.
-   *
-   * @param dto the dto
-   * @return the object corresponding to a DtoVideoProcessor 
+   * analysis of a video.
+   * @param dto the dto Object has to be able to be casted to the class DtoVideoAnalysis.
+   * @return the object corresponding to a DtoVideoProcessor, in case of an error the input object 
    */
   @Override
   public Object algoritm(Object dto) {
@@ -67,10 +67,11 @@ public class VideoAnalisisController extends Controller {
   }
   
   /**
-   * Detect players.
+   * Detect players uses the needed classes from the package logic.imageprocessor
+   * to detect the possible players in a OpenCV.Mat class
    *
-   * @param image the image
-   * @return the mat
+   * @param image the image, must be an opencv mat. In RGB format.
+   * @return the mat opencv mat with the players in red color and the background in black
    */
   private Mat detectPlayers(Mat image) {
     ImageProcessor processor = new OpencvImageProcessor();

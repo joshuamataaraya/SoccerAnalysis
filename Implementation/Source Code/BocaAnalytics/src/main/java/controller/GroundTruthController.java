@@ -21,7 +21,9 @@ import java.util.stream.DoubleStream;
 /**
  * The Class GroundTruthController.
  * This is the interface of the functionality for the ground controller
- * analizer.
+ * analyzer.
+ * The idea of the algoritm implemented here is to compare the analysis that tha
+ * program does on a video, with a ground truth test that is already known.
  */
 public class GroundTruthController extends Controller {
   
@@ -29,12 +31,12 @@ public class GroundTruthController extends Controller {
   private double [ ] diceValues;
   
   /**
-   * It is expected to receive an Object able to be 
-   * casted to the class DTOGoundTruth.
-   * The return Object contains the results according to the dto DTOGoundTruth
+   * This method compares the analysis that the program does of an input 
+   * that a user specifies as correct (Ground truth) and the same video 
+   * without been procesed.
    *
-   * @param dto the dto
-   * @return the object DtoGroundTruth
+   * @param dto the dto Object has to be able to be casted to the class DTOGoundTruth.
+   * @return the object can be casted to the class DtoGroundTruth
    */
   @Override
   public Object algoritm(Object dto) {
@@ -84,8 +86,8 @@ public class GroundTruthController extends Controller {
    * Uses OpenCV function Imgproc.cvtColor():
    * http://docs.opencv.org/java/2.4.9/org/opencv/imgproc/Imgproc.html
    * 
-   * @param mat the mat
-   * @param matGroundTruth the mat ground truth
+   * @param mat The object has to be able to be casted to the class Mat from OpenCV.
+   * @param matGroundTruth the object has to be from the class Mat openCV
    * @return the dice value
    */
   private double getDiceValue( Object mat, Object matGroundTruth ) {

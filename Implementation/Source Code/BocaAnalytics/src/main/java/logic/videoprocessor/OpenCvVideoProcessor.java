@@ -16,6 +16,8 @@ import org.opencv.videoio.Videoio;
 
 /**
  * The Class OpenCVVideoProcessor.
+ * This class extends from the class VideoProcessor and implements
+ * all the abstract methods using the openCV library.
  */
 public class OpenCvVideoProcessor extends VideoProcessor {
 
@@ -31,14 +33,16 @@ public class OpenCvVideoProcessor extends VideoProcessor {
   /** The video writer. */
   private VideoWriter videoWriter;
   
-  /** The fps. */
+  /** The frames per second property of the video. */
   private double fps;
 
   /**
    * Instantiates a new open CV video processor.
+   * This is a constructor.
    *
-   * @param filePath the file to be analyzed.
+   * @param filePath the file path of the video to be analyzed.
    * @param outFilePath the out file path where the result video has to be.
+   * @see VideoProcessor( String filePath, String outFilePath ) 
    */
   public OpenCvVideoProcessor(String filePath, String outFilePath) {
     super(filePath, outFilePath);
@@ -50,8 +54,10 @@ public class OpenCvVideoProcessor extends VideoProcessor {
   
   /**
    * Instantiates a new open CV video processor.
+   * This is a constructor.
    *
-   * @param filePath the file path to be analyzed.
+   * @param filePath the file path of the video to be analyzed.
+   * @see logic.videoprocessor.VideoProcessor#VideoProcessor(String filePath)
    */
   public OpenCvVideoProcessor(String filePath) {
     super(filePath);
@@ -73,7 +79,6 @@ public class OpenCvVideoProcessor extends VideoProcessor {
    * Sets the video fps property from the opened video.
    * Uses the get method from the VideoWriter class
    * http://docs.opencv.org/java/3.1.0/org/opencv/videoio/VideoWriter.html
-   
    */
   private void setVideoFps() {
     fps = video.get(Videoio.CAP_PROP_FPS);
@@ -91,13 +96,16 @@ public class OpenCvVideoProcessor extends VideoProcessor {
   }
 
   /**
-   * Initialize current frame when analysing the video.
+   * Initialize current frame when analyzing the video.
+   * This method is the constructor.
    */
   private void initializeCurrentFrame() {
     currentFrame = new Mat();
   }
 
-  /* (non-Javadoc)
+  /** 
+   * Open a video stored in the filePath attribute of this class
+   * using the library OpenCV
    * @see logic.videoprocessor.VideoProcessor#openVideo()
    */
   @Override
@@ -110,7 +118,8 @@ public class OpenCvVideoProcessor extends VideoProcessor {
   } 
 
 
-  /* (non-Javadoc)
+  /** 
+   * Count the frames of the video using the library OpenCV
    * @see logic.videoprocessor.VideoProcessor#setFrameCount()
    */
   @Override
@@ -119,7 +128,9 @@ public class OpenCvVideoProcessor extends VideoProcessor {
   }
 
 
-  /* (non-Javadoc)
+  /**
+   * Stores the video using the OpenCV Library.
+   * @return the path where the video was stored.
    * @see logic.videoprocessor.VideoProcessor#saveVideo()
    */
   @Override
@@ -130,7 +141,9 @@ public class OpenCvVideoProcessor extends VideoProcessor {
     return this.outFilePath;
   }
 
-  /* (non-Javadoc)
+  /** 
+   * Read the next frame on the video that is been analyzed using OpenCV.
+   * @return Object of the type Mat with the frame that was readed.
    * @see logic.videoprocessor.VideoProcessor#readFrame()
    */
   @Override
@@ -139,7 +152,10 @@ public class OpenCvVideoProcessor extends VideoProcessor {
     return this.currentFrame;
   }
   
-  /* (non-Javadoc)
+  /** 
+   * Writes a new frame in the result video that is been created after the 
+   * analysis using OpenCv.
+   * @param frame the Mat object from OpenCV with the frame that will be written
    * @see logic.videoprocessor.VideoProcessor#writeFrame(java.lang.Object)
    */
   @Override

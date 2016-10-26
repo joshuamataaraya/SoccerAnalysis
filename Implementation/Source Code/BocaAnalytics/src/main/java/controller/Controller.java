@@ -17,13 +17,13 @@ public abstract class Controller extends Observable {
   /**
    * Algoritm.
    * Method that does the purpose of the class
-   * @param dto the dto sent by the websocket
-   * @return the object, mostly a dto
+   * @param dto the Object has to cast to a class from the datatransferobject package
+   * @return the object, mostly a class from the datatransferobject package
    */
   public abstract Object algoritm(Object dto);
 
   /**
-   * Gets the input.
+   * Gets the input attribute, it can be casted to a class from the package datatransferobject.
    * @return the input
    */
   public Object getInput() {
@@ -33,7 +33,7 @@ public abstract class Controller extends Observable {
   /**
    * Sets the input.
    *
-   * @param input the input to set
+   * @param input the input to set. It has to be a class from the package datatrasnferobject
    */
   public void setInput(Object input) {
     this.input = input;

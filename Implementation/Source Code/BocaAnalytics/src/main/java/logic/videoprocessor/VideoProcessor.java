@@ -7,6 +7,8 @@ package logic.videoprocessor;
 
 /**
  * The Class VideoProcessor.
+ * This class represents the basic functions that a video processor has to have.
+ * 
  */
 public abstract class VideoProcessor {
   
