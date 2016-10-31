@@ -30,40 +30,42 @@ public class VideoAnalisisController extends Controller {
    */
   @Override
   public Object algoritm(Object dto) {
-    try {
-      // Cast to DtoVideoAnalysis class
-      DtoVideoAnalysis input = (DtoVideoAnalysis) dto;
-      
-      //Initialize the class to analyze the video
-      OpenCvVideoProcessor vp = new OpenCvVideoProcessor(
-          input.getVideoPath(),
-          input.getOutVideoPath());
-      
-      int frames = vp.getFrameCount();
-      int totalFrames = vp.getFrameCount();
-      int percentage = 0;
-      
-      //detects the players on each frame of the video.
-      while ( frames > 0 ) {
-        Mat frame = (Mat) vp.readFrame();
-        if (!frame.empty()) {
-          //detect all the players in the current frame that is been analyzed
-          frame = detectPlayers(frame);
-          //Write the frame analyzed on the result video
-          vp.writeFrame(frame);
-        }
-        frames--;
+    
+    // Cast to DtoVideoAnalysis class
+    DtoVideoAnalysis input = (DtoVideoAnalysis) dto;
+    
+    //Initialize the class to analyze the video
+    OpenCvVideoProcessor vp = new OpenCvVideoProcessor(
+        input.getVideoPath(),
+        input.getOutVideoPath());
+    
+    int frames = vp.getFrameCount();
+    int totalFrames = vp.getFrameCount();
+    int percentage = 0;
+    
+    //detects the players on each frame of the video.
+    while ( frames > 0 ) {
+      Mat frame = new Mat();
+      frame = (Mat) vp.readFrame();
+      if (!frame.empty()) {
+        //detect all the players in the current frame that is been analyzed
         
-        //Notify the observers the current status of the analysis
-        percentage = notifyFrames(totalFrames - frames, totalFrames, percentage);
+        frame = detectPlayers(frame);
+        //Write the frame analyzed on the result video
+        vp.writeFrame(frame);
       }
-      //Save the video on a path and stores the path on the result DTO
-      input.setOutVideoPath(vp.saveVideo());
-      return input;      
-    } catch (Exception exception) {
-      System.out.println(exception.getMessage());
-      return dto;
+      System.out.println(frames);
+      frames--;
+      System.gc();//clean memory
+      
+      //Notify the observers the current status of the analysis
+      percentage = notifyFrames(totalFrames - frames, totalFrames, percentage);
     }
+    
+    //Save the video on a path and stores the path on the result DTO
+    input.setOutVideoPath(vp.saveVideo());
+    return input;      
+
   }
   
   /**
@@ -77,7 +79,11 @@ public class VideoAnalisisController extends Controller {
     ImageProcessor processor = new OpencvImageProcessor();
     Detector fieldDetector = new FieldDetector(image);
     Detector playerDetector = new PlayerDetector(image);
-    return (Mat) processor.paintPlayers(image, fieldDetector.detect(), playerDetector.detect());
+    Object field = fieldDetector.detect();
+    Object players = playerDetector.detect();
+    //Imgcodecs.imwrite("testData/realFrames/"+ frames + ".png", (Mat) field);
+    //Imgcodecs.imwrite("testData/realFrames2/"+ frames + ".png", (Mat) players);
+    return (Mat) processor.paintPlayers(image, field, players);
   }
 
 }
