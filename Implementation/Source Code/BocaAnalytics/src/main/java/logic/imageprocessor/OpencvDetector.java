@@ -8,6 +8,7 @@ package logic.imageprocessor;
 import logic.Constants;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
+import org.opencv.imgcodecs.Imgcodecs;
 
 
 
@@ -39,10 +40,13 @@ abstract class OpencvDetector extends Detector {
   protected Mat imfill(Mat image, Point point) {
     //Fill holes in an image
     //Point must be part of the background
-    image = (Mat)processor.drawRectangle(image, new Point(0,0), new Point(50,50), Constants.BLACK);
-    Mat clone = image.clone();
-    clone = (Mat) processor.floodFill(clone, point, Constants.WHITE);
+    image = (Mat)processor.drawRectangle(image, new Point(0,0), new Point(640,50), Constants.BLACK);
+
+    
+    Mat clone = (Mat) processor.floodFill((Mat) image, point, Constants.WHITE);
+    clone = (Mat) processor.floodFill(clone, point, Constants.WHITE);//Double check
     //paint background of color white
+
     
     Mat invertedImage = (Mat) processor.complement(clone);
     //make ore between the inverted filled image and the original image

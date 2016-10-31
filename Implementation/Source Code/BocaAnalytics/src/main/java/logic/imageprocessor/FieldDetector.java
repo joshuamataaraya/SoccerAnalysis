@@ -11,6 +11,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class FieldDetector extends OpencvDetector {
    * Instantiates a new field detector.
    * @param image of video, must be in RGB format. Expected to be an OpenCV Mat.
    */
+  
   public FieldDetector(Mat image) {
     super(image);
   }
@@ -52,6 +54,7 @@ public class FieldDetector extends OpencvDetector {
     //Imgcodecs.imwrite("testData/2-hsv.png", hsv);
     //get greenish pixels of the field
     Mat greenMask = greenMask(hsv);
+    
     //Imgcodecs.imwrite("testData/3-binaria.png", greenMask);
     Mat dilatedImage = (Mat) processor.dilate(greenMask);
     //Imgcodecs.imwrite("testData/4-dilatada.png", dilatedImage);
@@ -61,17 +64,17 @@ public class FieldDetector extends OpencvDetector {
     //fill spurios regions in the background
     Mat polishedImage = bwareopen(filledImage);
     //Imgcodecs.imwrite("testData/6-pulida.png", polishedImage);
-    Mat finalImage = fillEspuriousRegions(polishedImage);    
+    //Mat finalImage = fillEspuriousRegions(polishedImage); 
     //Imgcodecs.imwrite("testData/7-finalTouch.png", finalImage);
-    Mat imageWithoutScore = removeScore(finalImage);
+    Mat imageWithoutScore = removeScore(polishedImage);
     //Imgcodecs.imwrite("testData/8-noScore.png", imageWithoutScore);
-    greenMask.release();
+    /*greenMask.release();
     rgb.release();
     hsv.release();
     //dilatedImage.release();
     filledImage.release();
     polishedImage.release();
-    finalImage.release();
+    finalImage.release();*/
     return imageWithoutScore;
   }
   
@@ -119,8 +122,12 @@ public class FieldDetector extends OpencvDetector {
       }
       //finally they are filled.
       return (Mat) processor.fillContours(polishedImage, littleContours, Constants.BLACK);
+    } else {
+      //A VECES LLEGA ACÁ Y NO DEBERÍA
+      System.out.println("devolvio un NULL");
+      Imgcodecs.imwrite("testData/null.png", image);
+      return image;
     }
-    return null;
   }
   
   /**

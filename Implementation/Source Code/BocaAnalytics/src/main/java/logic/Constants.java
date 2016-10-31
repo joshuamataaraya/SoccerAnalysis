@@ -67,7 +67,7 @@ public class Constants {
   /**
    * start point of an image. Must not change.
    */
-  public static Point STARTPOINT = new Point(0,0);
+  public static Point STARTPOINT = new Point(1,1);
     
   /**
    * black color in Scalar type. Must not change. 

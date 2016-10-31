@@ -56,8 +56,6 @@ public class PlayerDetector extends OpencvDetector {
     //set background to point (0, 70% of height):
     //fill spurious regions
     Mat filledImage = imfill(umbralizada, new Point(0, imageMat.height()  * 0.70));
-    //Imgcodecs.imwrite("testData/jugadores.png", filledImage);
-    //Imgcodecs.imwrite("testData/umbralizada.png", umbralizada);
     //converts it into binary image
     filledImage.convertTo(filledImage, 0);
     return filledImage;

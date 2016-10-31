@@ -69,6 +69,8 @@ public class OpencvImageProcessor extends ImageProcessor {
   @Override
   public Mat dilate(Object image) {
     Mat dilatedMat = new Mat();
+    Mat imageMat = (Mat) image;
+    dilatedMat = imageMat.clone();
     //opencv dilate
     Imgproc.dilate((Mat) image, dilatedMat, new Mat()); 
     return dilatedMat;
@@ -106,10 +108,10 @@ public class OpencvImageProcessor extends ImageProcessor {
    */
   @Override
   public Mat floodFill(Object image, Object point, Object color) {
-    Mat matImage = (Mat) image;
-    Mat matImageClone = matImage.clone();
+    Mat imageMat = (Mat) image;
+    Mat matImageClone = imageMat.clone();
     //create a mask. In this case it's basically empty.
-    Mat mask = new Mat(matImageClone.rows() + 2, matImageClone.cols() + 2, CvType.CV_8UC1);
+    Mat mask = Mat.zeros(matImageClone.rows() + 2, matImageClone.cols() + 2, CvType.CV_8U);
     //fill it with a given color, in a given point.
     Imgproc.floodFill(matImageClone, mask, (Point) point, (Scalar) color);
     //starts to fill in point
@@ -153,8 +155,10 @@ public class OpencvImageProcessor extends ImageProcessor {
   @Override
   public List<MatOfPoint> findContours(Object image) {
     List<MatOfPoint> contours = new ArrayList<>();//all contorus are saved here
+    Mat imageMat = (Mat) image;
+    Mat clone = imageMat.clone();
     //find all countours of the image.
-    Imgproc.findContours((Mat) image, contours, new Mat(), 
+    Imgproc.findContours(clone, contours, new Mat(), 
         Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE, new Point(0,0));
     return contours;
   }

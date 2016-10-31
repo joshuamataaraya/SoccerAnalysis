@@ -19,7 +19,7 @@ public class VideoAnalisisControllerTest {
   public void videoAnalisisAlgorithmTest() {
     DtoVideoAnalysis dto = new DtoVideoAnalysis();
     dto.setOutVideoPath("testData/");
-    dto.setVideoPath("testData/video2.mp4");
+    dto.setVideoPath("testData/video2.avi");
     VideoAnalisisController va = new VideoAnalisisController();
     va.algoritm(dto);
   }
