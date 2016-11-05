@@ -54,9 +54,10 @@ public class VideoAnalisisController extends Controller {
         //Write the frame analyzed on the result video
         vp.writeFrame(frame);
       }
-      System.out.println(frames);
       frames--;
-      System.gc();//clean memory
+      if (frames % 20 == 0) {
+        System.gc();//clean memory
+      }
       
       //Notify the observers the current status of the analysis
       percentage = notifyFrames(totalFrames - frames, totalFrames, percentage);

@@ -35,6 +35,7 @@ public class PlayerDetectorTest {
     Mat correctImage = Imgcodecs.imread("testData/jugadores.png",
         Imgcodecs.IMREAD_GRAYSCALE);
     Mat realImage = (Mat) detector.detect();
+    //Imgcodecs.imwrite("testData/jugadores.png", realImage); in case it fails, decomment this
     assertTrue(processor.compareImage(realImage, correctImage));
   }
 

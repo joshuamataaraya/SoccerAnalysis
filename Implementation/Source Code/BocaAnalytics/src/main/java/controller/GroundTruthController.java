@@ -64,10 +64,15 @@ public class GroundTruthController extends Controller {
         //check if each frame is not empty
         if ( !frame.empty() && !frameGroundTruth.empty() ) {
           //insert a new calculated value on the array of diceValues
-          diceValues [ frames - 1 ] = getDiceValue( frame, frameGroundTruth ) ;
+          double diceValue =  getDiceValue( frame, frameGroundTruth) + 0.01;
+          System.out.println("Frame " + frames + " : " + diceValue);
+          diceValues [ frames - 1 ] = diceValue;
         }
         frames--;
         //notifies the observers the status of the analysis
+        if (frames % 20 == 0) {
+          System.gc();//clean memory
+        }
         percentage = notifyFrames(totalFrames - frames, totalFrames, percentage);
       }
       
@@ -90,7 +95,7 @@ public class GroundTruthController extends Controller {
    * @param matGroundTruth the object has to be from the class Mat openCV
    * @return the dice value
    */
-  private double getDiceValue( Object mat, Object matGroundTruth ) {
+  private double getDiceValue( Object mat, Object matGroundTruth) {
     //Initialize the image processor
     ImageProcessor processor = new OpencvImageProcessor();
 
@@ -102,7 +107,11 @@ public class GroundTruthController extends Controller {
     Imgproc.cvtColor((Mat)matGroundTruth,(Mat) matGroundTruth,Imgproc.COLOR_BGR2GRAY);
     
     //get the dice value of the analysis of the two images
-    Double dice = processor.dice(matGroundTruth, fieldDetector.detect(), playerDetector.detect());
+    //Imgcodecs.imwrite("testData/debug1/" + frames + ".png", (Mat) matGroundTruth);
+    Object field = fieldDetector.detect();
+    Object players = playerDetector.detect();
+    //Imgcodecs.imwrite("testData/debug2/" + frames + ".png", (Mat) processor.getPlayers(field, players));
+    Double dice = processor.dice(matGroundTruth, (Mat) field, (Mat) players);
     return dice;
   }
 }

@@ -89,5 +89,5 @@ public class Constants {
    * If the window gets bigger, makes the players blobs bigger.
    * If the windows get smaller, makes the players blobs smaller. 
    */
-  public static Size windowSize =  new Size(10, 10);
+  public static Size windowSize =  new Size(15, 15);
 }
