@@ -1,0 +1,51 @@
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    max-width: 80%;
+    font-size: 1.20rem;
+    /* 20px */
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.625rem 1.25rem;
+    /* 10px 20px */
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: red;
+}
+.inputfile + label {
+    cursor: pointer; /* "hand" cursor */
+}
+.inputfile:focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+.inputfile + label * {
+    pointer-events: none;
+}
+
+/* style 1 */
+
+.inputfile-1 + label {
+    color: white;
+    background-color: #3D73BB;
+}
+
+.inputfile-1:focus + label,
+.inputfile-1.has-focus + label,
+.inputfile-1 + label:hover {
+    background-color: #2661af;
+}
+
