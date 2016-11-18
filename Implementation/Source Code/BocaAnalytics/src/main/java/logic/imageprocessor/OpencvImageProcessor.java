@@ -231,6 +231,11 @@ public class OpencvImageProcessor extends ImageProcessor {
     //fill the background of the field, so we do not paint it :)
     playersMat = floodFill(playersMat, Constants.STARTPOINT, Constants.BLACK);
     //Imgcodecs.imwrite("testData/blobsBinarios.png", (Mat) playersMat);
+    /*List<MatOfPoint> contours = new ArrayList<>();//all contours of players are saved here
+    contours = findContours(playersMat);
+    if (!contours.isEmpty()) {
+      Imgproc.drawContours(playersMat , contours, -1, Constants.RED,0);
+    }*/
     return playersMat;
   }
 

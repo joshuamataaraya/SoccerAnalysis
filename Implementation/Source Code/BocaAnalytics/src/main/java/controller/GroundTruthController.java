@@ -13,6 +13,7 @@ import logic.imageprocessor.OpencvImageProcessor;
 import logic.imageprocessor.PlayerDetector;
 import logic.videoprocessor.OpenCvVideoProcessor;
 import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 
@@ -64,7 +65,7 @@ public class GroundTruthController extends Controller {
         //check if each frame is not empty
         if ( !frame.empty() && !frameGroundTruth.empty() ) {
           //insert a new calculated value on the array of diceValues
-          double diceValue =  getDiceValue( frame, frameGroundTruth) + 0.01;
+          double diceValue =  getDiceValue( frame, frameGroundTruth,frames) + 0.01;
           System.out.println("Frame " + frames + " : " + diceValue);
           diceValues [ frames - 1 ] = diceValue;
         }
@@ -95,7 +96,7 @@ public class GroundTruthController extends Controller {
    * @param matGroundTruth the object has to be from the class Mat openCV
    * @return the dice value
    */
-  private double getDiceValue( Object mat, Object matGroundTruth) {
+  private double getDiceValue( Object mat, Object matGroundTruth, int frames) {
     //Initialize the image processor
     ImageProcessor processor = new OpencvImageProcessor();
 
@@ -110,7 +111,7 @@ public class GroundTruthController extends Controller {
     //Imgcodecs.imwrite("testData/debug1/" + frames + ".png", (Mat) matGroundTruth);
     Object field = fieldDetector.detect();
     Object players = playerDetector.detect();
-    //Imgcodecs.imwrite("testData/debug2/" + frames + ".png", (Mat) processor.getPlayers(field, players));
+    Imgcodecs.imwrite("testData/debug2/" + frames + ".png", (Mat) processor.getPlayers(field, players));
     Double dice = processor.dice(matGroundTruth, (Mat) field, (Mat) players);
     return dice;
   }

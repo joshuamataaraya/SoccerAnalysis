@@ -14,6 +14,7 @@ import logic.imageprocessor.PlayerDetector;
 import logic.videoprocessor.OpenCvVideoProcessor;
 
 import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
 
 /**
  * The Class VideoAnalisisController is to analyze a video looking for each
@@ -50,7 +51,7 @@ public class VideoAnalisisController extends Controller {
       if (!frame.empty()) {
         //detect all the players in the current frame that is been analyzed
         
-        frame = detectPlayers(frame);
+        frame = detectPlayers(frame,frames);
         //Write the frame analyzed on the result video
         vp.writeFrame(frame);
       }
@@ -76,7 +77,8 @@ public class VideoAnalisisController extends Controller {
    * @param image the image, must be an opencv mat. In RGB format.
    * @return the mat opencv mat with the players in red color and the background in black
    */
-  private Mat detectPlayers(Mat image) {
+  private Mat detectPlayers(Mat image, int frames) {
+    //Imgcodecs.imwrite("testData/frames/"+ frames + ".png", image);
     ImageProcessor processor = new OpencvImageProcessor();
     Detector fieldDetector = new FieldDetector(image);
     Detector playerDetector = new PlayerDetector(image);
