@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class OpencvImageProcessor.
@@ -261,4 +262,5 @@ public class OpencvImageProcessor extends ImageProcessor {
     //formula of dice metric
     return (2 * andMatPixels) / (playerPixels + groundTruthPixels);
   }
+  
 }

@@ -62,19 +62,12 @@ public class FieldDetector extends OpencvDetector {
     Mat filledImage = imfill(dilatedImage, new Point(0,0));
     //Imgcodecs.imwrite("testData/5-rellenada.png", filledImage);
     //fill spurios regions in the background
-    Mat polishedImage = bwareopen(filledImage);
+    Mat polishedImage = bwareaopen(filledImage);
     //Imgcodecs.imwrite("testData/6-pulida.png", polishedImage);
     //Mat finalImage = fillEspuriousRegions(polishedImage); 
     //Imgcodecs.imwrite("testData/7-finalTouch.png", finalImage);
     Mat imageWithoutScore = removeScore(polishedImage);
     //Imgcodecs.imwrite("testData/8-noScore.png", imageWithoutScore);
-    /*greenMask.release();
-    rgb.release();
-    hsv.release();
-    //dilatedImage.release();
-    filledImage.release();
-    polishedImage.release();
-    finalImage.release();*/
     return imageWithoutScore;
   }
   
@@ -84,7 +77,7 @@ public class FieldDetector extends OpencvDetector {
    * @param image the image in hsv format. Must be an opencv mat.
    * @return a binary opencv Mat Image representing with green pixels detected
    */
-  private Mat greenMask(Mat image) {
+  public Mat greenMask(Mat image) {
     //crates a binary mask of green pixeles of an image
     //image must in hsv format
     Scalar alfaMin = new Scalar(Constants.GREEN - Constants.SENSITIVITY, 
@@ -105,7 +98,7 @@ public class FieldDetector extends OpencvDetector {
    * @return the binary opencv mat without the spurios regions.
    */
   @SuppressWarnings("unchecked")
-  private Mat bwareopen(Mat image) {
+  public Mat bwareaopen(Mat image) {
     /*Eliminates spurious regions*/
     List<MatOfPoint> contours = new ArrayList<>();//all contorus are saved here
     List<MatOfPoint> littleContours = new ArrayList<>();//little contours are saved here 
@@ -140,7 +133,7 @@ public class FieldDetector extends OpencvDetector {
     //fills possible holes that were not filled before
     //generally are regions close to the borders
     Mat invImage = (Mat) processor.complement(image);
-    Mat invPoolished = bwareopen(invImage);
+    Mat invPoolished = bwareaopen(invImage);
     return (Mat) processor.complement(invPoolished);
   }
   

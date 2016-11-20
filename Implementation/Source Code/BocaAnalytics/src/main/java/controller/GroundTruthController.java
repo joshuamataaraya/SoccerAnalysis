@@ -111,7 +111,7 @@ public class GroundTruthController extends Controller {
     //Imgcodecs.imwrite("testData/debug1/" + frames + ".png", (Mat) matGroundTruth);
     Object field = fieldDetector.detect();
     Object players = playerDetector.detect();
-    Imgcodecs.imwrite("testData/debug2/" + frames + ".png", (Mat) processor.getPlayers(field, players));
+    //Imgcodecs.imwrite("testData/debug2/" + frames + ".png", (Mat) processor.getPlayers(field, players));
     Double dice = processor.dice(matGroundTruth, (Mat) field, (Mat) players);
     return dice;
   }

@@ -37,7 +37,7 @@ abstract class OpencvDetector extends Detector {
    * @param point to the background of the image.
    * @return the opencv mat, with the holes filled. In binary format.
    */
-  protected Mat imfill(Mat image, Point point) {
+  public Mat imfill(Mat image, Point point) {
     //Fill holes in an image
     //Point must be part of the background
     image = (Mat)processor.drawRectangle(image, new Point(0,0), new Point(640,50), Constants.BLACK);

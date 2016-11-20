@@ -10,7 +10,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.opencv.core.Core;
+import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -31,13 +33,17 @@ public class ImageProcessorTest {
   @Test
   public void testCompareImage() {
     ImageProcessor processor = new OpencvImageProcessor();
+    // compare the same images
     assertTrue(processor.compareImage(
         Imgcodecs.imread("testData/1-rgb.png", Imgcodecs.IMREAD_GRAYSCALE), 
             Imgcodecs.imread("testData/1-rgb.png", Imgcodecs.IMREAD_GRAYSCALE)));
+    // compare different images
     assertFalse(processor.compareImage(
         Imgcodecs.imread("testData/asdf.png", Imgcodecs.IMREAD_GRAYSCALE), 
             Imgcodecs.imread("testData/1-rgb.png", Imgcodecs.IMREAD_GRAYSCALE)));
   }
+  
+  
   
   /*
   @Test

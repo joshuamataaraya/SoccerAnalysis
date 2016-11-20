@@ -30,8 +30,10 @@ public class PlayerDetectorTest {
    */
   @Test
   public void testDetect() {
+    //Integration test for player detection algorithm.
     ImageProcessor processor = new OpencvImageProcessor();
     Detector detector = new PlayerDetector(Imgcodecs.imread("testData/1-rgb.png"));
+    //Uses ground truth.
     Mat correctImage = Imgcodecs.imread("testData/jugadores.png",
         Imgcodecs.IMREAD_GRAYSCALE);
     Mat realImage = (Mat) detector.detect();
