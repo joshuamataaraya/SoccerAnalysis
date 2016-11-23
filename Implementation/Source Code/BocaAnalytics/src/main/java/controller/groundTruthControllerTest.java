@@ -6,6 +6,9 @@
 package controller;
 
 import datatransferobject.DtoGroundTruth;
+
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
   
@@ -33,6 +36,8 @@ public class groundTruthControllerTest {
     dto = (DtoGroundTruth)gt.algoritm(dto);
     double dice = dto.getDiceValue();
     System.out.println("Dice: " + dice);
+    
+    assertTrue(dice >= 0.75);
   }
 
 }

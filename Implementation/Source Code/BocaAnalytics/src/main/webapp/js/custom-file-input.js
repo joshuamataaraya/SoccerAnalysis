@@ -8,7 +8,6 @@
 ;( function ( document, window, index )
 {
 	var inputs = document.querySelectorAll( '.inputfile' );
-	alert(inputs.length);
 	Array.prototype.forEach.call( inputs, function( input )
 	{
 		var label	 = input.nextElementSibling,
@@ -27,7 +26,6 @@
 			else
 				label.innerHTML = labelVal;
 		});
-
 		// Firefox bug fix
 		input.addEventListener( 'focus', function(){ input.classList.add( 'has-focus' ); });
 		input.addEventListener( 'blur', function(){ input.classList.remove( 'has-focus' ); });

@@ -6,6 +6,9 @@
 package controller;
 
 import datatransferobject.DtoVideoAnalysis;
+
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 
@@ -22,6 +25,8 @@ public class VideoAnalisisControllerTest {
     dto.setVideoPath("testData/video2.avi");
     VideoAnalisisController va = new VideoAnalisisController();
     va.algoritm(dto);
+    assertTrue(dto.getOutVideoPath() != "testData/" );
+    
   }
 
 }
